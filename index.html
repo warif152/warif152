@@ -1,0 +1,1420 @@
+<!doctype html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>وارِف | منصة الشراكة المجتمعية</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F3F6F5; --surface:#FFFFFF; --surface-2:#EAF1EF;
+  --ink:#10302D; --ink-2:#4A625F; --line:#D5E0DD;
+  --teal:#0B5A55; --teal-2:#137A72; --teal-ink:#FFFFFF;
+  --gold:#A9884F; --gold-soft:#F4EEE2;
+  --ok:#1E7B4E; --warn:#9A5B12; --err:#A33A2E;
+  --radius:14px; --radius-sm:9px;
+  --kufi:"Noto Kufi Arabic","IBM Plex Sans Arabic",Tahoma,sans-serif;
+  --plex:"IBM Plex Sans Arabic",Tahoma,"Segoe UI",sans-serif;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0B1514; --surface:#12201E; --surface-2:#172A27;
+    --ink:#E4EEEC; --ink-2:#9DB3AF; --line:#24403C;
+    --teal:#2E9C91; --teal-2:#45B5A9; --teal-ink:#06110F;
+    --gold:#C9A96A; --gold-soft:#2A2618;
+    --ok:#5CC08C; --warn:#E0A55A; --err:#E07A6C;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0B1514; --surface:#12201E; --surface-2:#172A27;
+  --ink:#E4EEEC; --ink-2:#9DB3AF; --line:#24403C;
+  --teal:#2E9C91; --teal-2:#45B5A9; --teal-ink:#06110F;
+  --gold:#C9A96A; --gold-soft:#2A2618;
+  --ok:#5CC08C; --warn:#E0A55A; --err:#E07A6C;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--plex);font-size:16px;line-height:1.75;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--teal)}
+img,svg{max-width:100%}
+a{color:var(--teal-2)}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px;border-radius:6px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+
+/* شريط الهوية الرسمية */
+.gov{background:var(--teal);color:var(--teal-ink);font-size:13px}
+.gov .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-top:8px;padding-bottom:8px;flex-wrap:wrap}
+.gov b{font-weight:600}
+.gov span{opacity:.88}
+
+/* الترويسة */
+header.site{background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:12px;padding-bottom:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
+.brand-mark{width:42px;height:42px;flex:none}
+.brand-name{font-family:var(--kufi);font-weight:800;font-size:22px;line-height:1.2;color:var(--teal)}
+.brand-sub{font-size:12.5px;color:var(--ink-2);line-height:1.4}
+nav.tabs{display:flex;gap:4px;flex-wrap:wrap}
+@media (max-width:640px){header.site .wrap{gap:8px}nav.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;width:100%}nav.tabs a{white-space:nowrap;text-align:center;padding:8px 4px;font-size:14px;background:var(--surface-2)}}
+nav.tabs a{text-decoration:none;color:var(--ink-2);font-weight:600;font-size:14.5px;padding:8px 14px;border-radius:999px;transition:background .15s,color .15s}
+nav.tabs a:hover{background:var(--surface-2);color:var(--ink)}
+nav.tabs a[aria-current="page"]{background:var(--teal);color:var(--teal-ink)}
+
+/* الواجهة الرئيسية */
+.hero{padding:56px 0 24px;text-align:center}
+.hero h1{font-family:var(--kufi);font-weight:800;font-size:clamp(36px,8.5vw,68px);line-height:1.25;margin:0;color:var(--teal);letter-spacing:0}
+.hero .lead{font-family:var(--kufi);font-weight:500;font-size:clamp(17px,3.6vw,22px);margin:10px 0 0;color:var(--ink)}
+.hero p.desc{max-width:560px;margin:14px auto 0;color:var(--ink-2)}
+.canopy{display:block;width:100%;max-width:760px;height:auto;margin:26px auto 0}
+.canopy path{fill:none;stroke:var(--gold);stroke-width:2;stroke-linecap:round}
+.canopy .trunk-line{stroke:var(--teal);stroke-width:3}
+.canopy .draw{stroke-dasharray:1200;stroke-dashoffset:1200;animation:draw 2.2s ease-out .25s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){.canopy .draw{animation:none;stroke-dashoffset:0}}
+.cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:28px}
+.btn{font:inherit;font-weight:700;font-size:16px;border:0;border-radius:var(--radius-sm);padding:13px 24px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px}
+.btn-primary{background:var(--teal);color:var(--teal-ink)}
+.btn-primary:hover{background:var(--teal-2)}
+.btn-ghost{background:transparent;color:var(--teal);box-shadow:inset 0 0 0 1.5px var(--teal)}
+.btn-ghost:hover{background:var(--surface-2)}
+.btn[disabled]{opacity:.55;cursor:not-allowed}
+
+section.block{padding:40px 0}
+.sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:20px}
+.sec-head h2{font-family:var(--kufi);font-weight:700;font-size:24px;margin:0;line-height:1.4}
+.sec-head::after{content:"";flex:1;height:1px;background:var(--line);align-self:center}
+
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);overflow:hidden}
+.steps li{padding:22px 22px 24px;border-inline-start:1px solid var(--line)}
+.steps li:first-child{border-inline-start:0}
+.steps .n{font-family:var(--kufi);font-weight:800;color:var(--gold);font-size:30px;line-height:1}
+.steps h3{font-size:17px;margin:10px 0 4px}
+.steps p{margin:0;color:var(--ink-2);font-size:14.5px}
+@media (max-width:720px){.steps{grid-template-columns:1fr}.steps li{border-inline-start:0;border-top:1px solid var(--line)}.steps li:first-child{border-top:0}}
+
+.paths{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.path{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:26px;display:flex;flex-direction:column;gap:10px;border-top:4px solid var(--teal)}
+.path.alt{border-top-color:var(--gold)}
+.path h3{font-family:var(--kufi);font-size:20px;margin:0}
+.path p{margin:0;color:var(--ink-2)}
+.path .btn{align-self:flex-start;margin-top:8px}
+@media (max-width:720px){.paths{grid-template-columns:1fr}}
+
+/* النماذج */
+.page-title{padding:36px 0 8px}
+.page-title h1{font-family:var(--kufi);font-weight:800;font-size:clamp(26px,5vw,34px);margin:0;color:var(--teal)}
+.page-title p{margin:6px 0 0;color:var(--ink-2);max-width:620px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:26px}
+form .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px 20px}
+form .full{grid-column:1/-1}
+@media (max-width:640px){form .grid{grid-template-columns:1fr}}
+label.lbl,.lbl{display:block;font-weight:600;font-size:14.5px;margin-bottom:6px}
+.req{color:var(--err)}
+.hint{font-size:13px;color:var(--ink-2);margin-top:4px}
+input[type=text],input[type=tel],input[type=password],select,textarea{
+  width:100%;font:inherit;font-size:16px;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:var(--radius-sm);padding:11px 13px;min-height:48px}
+textarea{min-height:96px;resize:vertical}
+input:focus,select:focus,textarea:focus{border-color:var(--teal);outline:none;box-shadow:0 0 0 3px color-mix(in srgb,var(--teal) 22%,transparent)}
+.choices{display:flex;flex-wrap:wrap;gap:8px}
+.choice{position:relative}
+.choice input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.choice span{display:inline-block;padding:9px 15px;border:1.5px solid var(--line);border-radius:999px;font-size:14.5px;font-weight:500;background:var(--bg);transition:all .15s}
+.choice input:checked+span{background:var(--teal);border-color:var(--teal);color:var(--teal-ink)}
+.choice input:focus-visible+span{outline:3px solid var(--gold);outline-offset:2px}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:14.5px}
+.consent input{width:20px;height:20px;margin-top:4px;accent-color:var(--teal);flex:none}
+.form-foot{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:22px;padding-top:20px;border-top:1px solid var(--line)}
+.msg{font-weight:600;font-size:15px}
+.msg.ok{color:var(--ok)} .msg.err{color:var(--err)}
+.hp{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;opacity:0;pointer-events:none}
+
+/* الفرص */
+.opps{display:grid;gap:14px}
+.opp{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center}
+.opp .date{width:66px;text-align:center;border:1.5px solid var(--gold);border-radius:10px;padding:6px 4px;line-height:1.25}
+.opp .date b{display:block;font-family:var(--kufi);font-size:24px;color:var(--teal)}
+.opp .date small{font-size:12px;color:var(--ink-2)}
+.opp h3{margin:0;font-size:17.5px}
+.opp p{margin:2px 0 6px;color:var(--ink-2);font-size:14.5px}
+.meta{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13.5px;color:var(--ink-2)}
+.meta .seats{color:var(--teal-2);font-weight:600}
+.meta .full-seat{color:var(--warn);font-weight:600}
+.opp-act{display:flex;flex-direction:column;gap:8px}
+.nvg-badge{color:var(--ok);font-weight:600}
+@media (max-width:640px){.opp{grid-template-columns:auto 1fr}.opp .opp-act{grid-column:1/-1}.opp-act .btn{width:100%}}
+.empty{text-align:center;padding:40px 20px;color:var(--ink-2);background:var(--surface);border:1px dashed var(--line);border-radius:var(--radius)}
+
+dialog{border:0;border-radius:var(--radius);padding:0;max-width:520px;width:calc(100% - 32px);background:var(--surface);color:var(--ink)}
+dialog::backdrop{background:rgba(6,20,18,.55)}
+dialog .d-head{padding:20px 24px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:10px}
+dialog .d-head h2{font-family:var(--kufi);font-size:19px;margin:0}
+dialog .d-body{padding:22px 24px}
+.x{background:none;border:0;font-size:26px;line-height:1;color:var(--ink-2);cursor:pointer;width:40px;height:40px;border-radius:8px}
+.x:hover{background:var(--surface-2)}
+
+/* لوحة الأثر */
+.gate{max-width:420px;margin:0 auto}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:0;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.kpi{padding:20px;border-inline-start:1px solid var(--line)}
+.kpi:first-child{border-inline-start:0}
+.kpi b{display:block;font-family:var(--kufi);font-weight:800;font-size:34px;color:var(--teal);line-height:1.2}
+.kpi span{font-size:14px;color:var(--ink-2)}
+@media (max-width:720px){.kpis{grid-template-columns:1fr 1fr}.kpi:nth-child(3){border-inline-start:0}.kpi:nth-child(n+3){border-top:1px solid var(--line)}}
+.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
+@media (max-width:820px){.dash-grid{grid-template-columns:1fr}}
+.card h3{font-family:var(--kufi);font-size:17px;margin:0 0 14px}
+.bars{display:grid;gap:10px}
+.bar{display:grid;grid-template-columns:140px 1fr 34px;gap:10px;align-items:center;font-size:14px}
+.bar .track{height:12px;background:var(--surface-2);border-radius:6px;overflow:hidden}
+.bar .fill{height:100%;background:var(--teal);border-radius:6px}
+.bar:nth-child(even) .fill{background:var(--gold)}
+.bar .v{font-weight:700;text-align:left}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius-sm)}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:560px}
+th,td{padding:10px 12px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+th{background:var(--surface-2);font-weight:700;font-size:13.5px}
+tr:last-child td{border-bottom:0}
+.subtabs{display:flex;gap:6px;margin:22px 0 12px;flex-wrap:wrap}
+.subtabs button{font:inherit;font-weight:600;font-size:14.5px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink-2);padding:8px 16px;border-radius:999px;cursor:pointer}
+.subtabs button[aria-selected="true"]{background:var(--teal);border-color:var(--teal);color:var(--teal-ink)}
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px}
+
+.domains{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.domain{background:var(--surface);padding:18px 22px}
+.domain h3{font-family:var(--kufi);font-weight:700;font-size:16.5px;color:var(--teal);margin:0 0 4px}
+.domain p{margin:0;color:var(--ink-2);font-size:14.5px}
+.domain.day{background:var(--gold-soft);display:flex;align-items:center;gap:16px}
+.domain.day b{font-family:var(--kufi);font-weight:800;font-size:34px;color:var(--gold);line-height:1;white-space:nowrap}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
+.facts div{border-inline-start:3px solid var(--gold);padding:2px 14px}
+.facts h4{margin:0;font-size:15px}
+.facts p{margin:2px 0 0;color:var(--ink-2);font-size:14.5px}
+@media (max-width:720px){.domains,.facts{grid-template-columns:1fr}}
+.notice{background:var(--gold-soft);border:1px solid color-mix(in srgb,var(--gold) 45%,transparent);border-radius:var(--radius-sm);padding:12px 16px;font-size:14px;color:var(--ink)}
+
+footer{margin-top:56px;border-top:1px solid var(--line);background:var(--surface);padding:26px 0;font-size:13.5px;color:var(--ink-2);text-align:center}
+footer p{margin:2px 0}
+.di{width:22px;height:22px;stroke:var(--gold);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;vertical-align:-5px;margin-inline-end:8px}
+.counters{display:grid;grid-template-columns:repeat(3,1fr);max-width:640px;margin:34px auto 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.counters div{padding:16px 8px}
+.counters div+div{border-inline-start:1px solid var(--line)}
+.counters b{display:block;font-family:var(--kufi);font-weight:800;font-size:clamp(26px,6vw,36px);color:var(--teal);line-height:1.3}
+.counters span{font-size:13.5px;color:var(--ink-2)}
+.done{text-align:center;padding:34px 26px}
+.done h2{font-family:var(--kufi);font-size:24px;margin:14px 0 6px;color:var(--teal)}
+.done p{color:var(--ink-2);max-width:520px;margin:0 auto}
+.check{width:64px;height:64px;border-radius:50%;background:var(--teal);display:grid;place-items:center;margin:0 auto;animation:pop .5s ease-out}
+.check svg{width:32px;height:32px;stroke:var(--teal-ink);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+@keyframes pop{0%{transform:scale(.4);opacity:0}70%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+@media (prefers-reduced-motion:reduce){.check{animation:none}}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:16px}
+.chip{background:var(--surface-2);color:var(--teal);font-weight:600;font-size:13.5px;padding:6px 12px;border-radius:999px}
+.cert{margin-top:18px;background:#fff;color:#10302D;border-radius:var(--radius);padding:14px;border:1px solid var(--line)}
+.cert-in{border:2px solid #A9884F;outline:1px solid #A9884F;outline-offset:-8px;border-radius:8px;padding:30px 26px;text-align:center}
+.cert-top{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:12.5px;color:#4A625F;border-bottom:1px solid #E3EAE8;padding-bottom:10px}
+.cert h3{font-family:var(--kufi);font-weight:800;font-size:clamp(22px,5vw,30px);color:#0B5A55;margin:22px 0 6px}
+.cert p{margin:6px auto;max-width:520px;color:#2F4A47;font-size:15px}
+.cert-name{font-family:var(--kufi);font-weight:700;font-size:clamp(22px,5vw,28px);color:#A9884F;margin:10px 0;padding-bottom:6px;border-bottom:1px dashed #D8C8A8;display:inline-block;min-width:60%}
+.cert-foot{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:24px;font-size:13px;color:#4A625F}
+.ticket{display:grid;grid-template-columns:1fr 1fr;margin-top:18px;border:1.5px dashed var(--gold);border-radius:12px;overflow:hidden}
+.ticket div{padding:12px 14px;border-bottom:1px dashed var(--line)}
+.ticket div:nth-child(odd){border-inline-end:1px dashed var(--line)}
+.ticket div:nth-last-child(-n+2){border-bottom:0}
+.ticket small{display:block;color:var(--ink-2);font-size:12.5px}
+.ticket b{font-size:15px}
+@media print{@page{margin:10mm}body{background:#fff}body::before{display:none}body *{visibility:hidden}body:not(.print-gift) #cert,body:not(.print-gift) #cert *{visibility:visible}#cert{position:absolute;left:0;right:0;top:0;border:0;padding:0}body.print-gift #giftPrint{display:block;position:absolute;left:0;right:0;top:0}body.print-gift #giftPrint *{visibility:visible}}
+/* المكتشف التفاعلي */
+.stepper{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:24px}
+.progress{display:flex;align-items:center;gap:14px;margin-bottom:22px}
+.pbar{flex:1;height:8px;background:var(--surface-2);border-radius:99px;overflow:hidden}
+.pbar i{display:block;height:100%;width:25%;background:var(--teal);border-radius:99px;transition:width .4s ease}
+#pstep{font-size:13.5px;color:var(--ink-2);font-weight:600;white-space:nowrap}
+.q{font-family:var(--kufi);font-size:clamp(20px,4.5vw,26px);margin:0 0 4px;line-height:1.5}
+.qh{margin:0;color:var(--ink-2);font-size:14.5px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-top:16px}
+@media (max-width:480px){.tiles{grid-template-columns:1fr 1fr;gap:10px}.tile-in{padding:13px}.tile-in b{font-size:14.5px}.stepper{padding:18px}}
+.tile{position:relative;cursor:pointer;display:block}
+.tile input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer;z-index:1}
+.tile-in{position:relative;display:flex;flex-direction:column;gap:6px;height:100%;padding:16px;border:1.5px solid var(--line);border-radius:12px;background:var(--bg);transition:transform .15s,border-color .15s,background .15s,box-shadow .15s}
+.tile:hover .tile-in{transform:translateY(-2px);border-color:var(--teal-2)}
+.tile-in svg{width:30px;height:30px;stroke:var(--teal);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.tile-in b{font-size:15.5px;line-height:1.5}
+.tile-in small{color:var(--ink-2);font-size:13px;line-height:1.5}
+.tile input:checked+.tile-in{border-color:var(--teal);background:color-mix(in srgb,var(--teal) 10%,var(--surface));box-shadow:0 0 0 3px color-mix(in srgb,var(--teal) 18%,transparent)}
+.tile input:checked+.tile-in::after{content:"✓";position:absolute;top:10px;left:12px;width:22px;height:22px;border-radius:50%;background:var(--teal);color:var(--teal-ink);font-size:13px;display:grid;place-items:center;font-weight:700}
+.tile input:focus-visible+.tile-in{outline:3px solid var(--gold);outline-offset:2px}
+.step{animation:slide .35s ease}
+@keyframes slide{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:none}}
+.step-nav{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:24px;padding-top:18px;border-top:1px solid var(--line)}
+.persona{text-align:center;padding:34px 24px;border-radius:var(--radius);background:linear-gradient(160deg,#0B5A55,#073A37);color:#fff}
+.persona .pi{width:80px;height:80px;margin:0 auto;border-radius:50%;background:rgba(255,255,255,.12);display:grid;place-items:center;animation:pop .6s ease-out}
+.persona .pi svg{width:42px;height:42px;stroke:#E8D3A6;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.persona small{display:block;margin-top:14px;color:#E8D3A6;font-weight:600;font-size:14px}
+.persona h2{font-family:var(--kufi);font-size:clamp(24px,6vw,34px);margin:4px 0 8px;color:#fff;line-height:1.4}
+.persona p{margin:0 auto;max-width:480px;color:rgba(255,255,255,.88)}
+.persona .chip{background:rgba(255,255,255,.14);color:#fff}
+.suggest{margin-top:18px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px}
+.suggest h3{font-family:var(--kufi);font-size:18px;margin:0 0 12px}
+.sugg{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--bg);margin-top:10px}
+.sugg b{display:block} .sugg small{color:var(--ink-2)}
+@media(max-width:560px){.sugg{flex-direction:column;align-items:stretch}}
+/* شجرة العطاء والهدف */
+.growth{display:grid;grid-template-columns:1.4fr 1fr;gap:18px}
+@media(max-width:780px){.growth{grid-template-columns:1fr}}
+.gcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px}
+.ct{font-family:var(--kufi);font-size:18px;margin:0}
+.cs{margin:4px 0 0;color:var(--ink-2);font-size:14px}
+.tree{width:100%;height:auto;display:block;margin-top:8px}
+.tree .trunk{fill:none;stroke:#8A6542;stroke-linecap:round}
+.tree .crown{fill:color-mix(in srgb,var(--teal) 7%,transparent)}
+.tree .slot{fill:none;stroke:var(--line);stroke-width:1.2;stroke-dasharray:2 3}
+.tree .leaf{transform-box:fill-box;transform-origin:center;animation:leaf .5s ease-out both}
+@keyframes leaf{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+@media (prefers-reduced-motion:reduce){.tree .leaf,.step,.persona .pi{animation:none}}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:12px;font-size:13px;color:var(--ink-2)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-inline-end:5px}
+.goal{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:12px}
+.ring-wrap{position:relative;width:180px;height:180px}
+.ring{width:180px;height:180px}
+.ring circle{fill:none;stroke-width:14}
+.ring .bg{stroke:var(--surface-2)}
+.ring .fg{stroke:var(--gold);stroke-linecap:round;transition:stroke-dashoffset 1.4s ease;transform:rotate(-90deg);transform-origin:center}
+.rv{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
+.rv b{font-family:var(--kufi);font-size:34px;color:var(--teal);line-height:1.2}
+.rv span{font-size:13px;color:var(--ink-2)}
+.progs{display:grid;gap:18px}
+.prog{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px;border-inline-start:4px solid var(--gold)}
+.prog-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+.prog h2{font-family:var(--kufi);font-size:20px;margin:2px 0 4px;color:var(--teal);line-height:1.5}
+.prog-head p{margin:0;color:var(--ink-2)}
+.prog-owner{color:var(--gold);font-weight:600;font-size:13px}
+.prog-count{text-align:center;min-width:76px;border:1.5px solid var(--line);border-radius:12px;padding:8px;flex:none}
+.prog-count b{display:block;font-family:var(--kufi);font-size:26px;color:var(--teal);line-height:1.3}
+.prog-count span{font-size:12.5px;color:var(--ink-2)}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin:16px 0 0}
+.post{margin:0;background:var(--bg);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+.post img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:var(--surface-2)}
+.post figcaption{padding:10px 12px}
+.post p{font-size:14px;color:var(--ink);margin:0 0 4px;line-height:1.6}
+.post small{color:var(--ink-2);font-size:12px}
+.prog > .btn{margin-top:16px}
+@media(max-width:480px){.gallery{grid-template-columns:1fr 1fr}.prog-head{flex-direction:column}}
+.upload{display:flex;flex-direction:column;align-items:center;gap:4px;padding:18px;border:1.5px dashed var(--teal-2);border-radius:12px;background:var(--bg);cursor:pointer;text-align:center;color:var(--ink-2);font-size:14px}
+.upload b{color:var(--teal)}
+.upload svg{width:30px;height:30px;stroke:var(--teal);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.upload input{position:absolute;width:1px;height:1px;opacity:0}
+.thumbs{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.thumbs div{position:relative;width:76px;height:76px;border-radius:10px;overflow:hidden;border:1px solid var(--line)}
+.thumbs img{width:100%;height:100%;object-fit:cover}
+.thumbs button{position:absolute;top:3px;left:3px;width:24px;height:24px;border:0;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;font-size:15px;line-height:1;cursor:pointer}
+.st{display:inline-block;padding:3px 10px;border-radius:999px;font-size:12.5px;font-weight:600}
+.st-wait{background:var(--gold-soft);color:var(--warn)} .st-ok{background:color-mix(in srgb,var(--ok) 14%,transparent);color:var(--ok)} .st-no{background:color-mix(in srgb,var(--err) 12%,transparent);color:var(--err)}
+.mini{font:inherit;font-size:13px;font-weight:600;padding:5px 10px;border-radius:8px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;margin-inline-end:4px}
+.mini.ok{border-color:var(--ok);color:var(--ok)} .mini.no{border-color:var(--err);color:var(--err)}
+td img.tb{width:44px;height:44px;object-fit:cover;border-radius:6px;vertical-align:middle;margin-inline-end:4px}
+.pgal{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:16px;max-width:560px}
+.pg{border:0;padding:0;aspect-ratio:1;border-radius:9px;overflow:hidden;cursor:pointer;background:var(--surface-2);display:block}
+.pg img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .25s}
+.pg:hover img{transform:scale(1.05)}
+.pg.more{display:grid;place-items:center;background:var(--teal);color:#fff;font-family:var(--kufi);font-size:22px;font-weight:700}
+.gal-cap{margin:8px 0 0;font-size:13.5px;color:var(--ink-2);font-weight:600}
+.lb{position:fixed;inset:0;z-index:60;background:rgba(4,14,13,.94);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;padding:calc(env(safe-area-inset-top,0px) + 16px) 12px calc(env(safe-area-inset-bottom,0px) + 16px)}
+.lb img{max-width:min(94vw,1100px);max-height:76vh;border-radius:10px;object-fit:contain;background:#000}
+.lb-bar{display:flex;align-items:center;gap:18px;color:#fff;font-size:15px;font-weight:600}
+.lb button{border:0;background:rgba(255,255,255,.14);color:#fff;width:46px;height:46px;border-radius:50%;font-size:24px;line-height:1;cursor:pointer}
+.lb button:hover{background:rgba(255,255,255,.26)}
+.lb .lb-x{position:absolute;top:calc(env(safe-area-inset-top,0px) + 12px);left:12px}
+.rules{margin:0;padding-inline-start:20px;color:var(--ink-2);display:grid;gap:6px;font-size:15px}
+.fsec{font-family:var(--kufi);font-size:15.5px;color:var(--teal);margin:22px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+#giftPrint{display:none}
+.gp{font-family:var(--plex);color:#10302D;background:#fff;padding:10mm 4mm}
+.gp-head{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px solid #0B5A55;padding-bottom:8px;font-size:13px;line-height:1.7}
+.gp h2{text-align:center;font-family:var(--kufi);color:#0B5A55;margin:14px 0 10px;font-size:22px}
+.gp h3{font-family:var(--kufi);font-size:15px;margin:14px 0 6px;color:#0B5A55}
+.gp table{width:100%;border-collapse:collapse;min-width:0;font-size:13.5px}
+.gp td{border:1px solid #9FB3AF;padding:7px 9px;white-space:normal;vertical-align:top}
+.gp td:first-child{width:30%;background:#EEF4F2;font-weight:700}
+.gp .decl{border:1px solid #9FB3AF;padding:10px 12px;font-size:13.5px;line-height:2}
+.gp .note{margin-top:10px;font-size:12.5px;border:1px dashed #9FB3AF;padding:6px 10px}
+.st-sub{font-size:11.5px;color:var(--ink-2)}
+.gtypes{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.gtype{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px;border-top:4px solid var(--gold)}
+.gtype svg{width:34px;height:34px;stroke:var(--teal);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.gtype h3{font-family:var(--kufi);font-size:18px;margin:8px 0 4px;color:var(--teal)}
+.gtype p{margin:0;color:var(--ink-2);font-size:14.5px}
+@media(max-width:640px){.gtypes{grid-template-columns:1fr}}
+.dchip{display:inline-flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:14px;font-weight:600;color:var(--ink)}
+.dchip svg{width:18px;height:18px;stroke:var(--gold);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.rules-box{margin-top:22px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 18px}
+.rules-box summary{cursor:pointer;font-weight:700;color:var(--teal)}
+.rules-box .rules{margin-top:10px}
+/* ===== طبقة الجمال والاحتراف ===== */
+:root{--shadow:0 1px 2px rgba(16,48,45,.05),0 10px 28px -14px rgba(16,48,45,.22);--shadow-h:0 2px 4px rgba(16,48,45,.06),0 18px 36px -16px rgba(16,48,45,.3);--teal-deep:#083F3C}
+body{background:radial-gradient(1200px 500px at 80% -10%,color-mix(in srgb,var(--gold) 9%,transparent),transparent 60%),var(--bg)}
+header.site{background:color-mix(in srgb,var(--surface) 90%,transparent);-webkit-backdrop-filter:saturate(1.4) blur(12px);backdrop-filter:saturate(1.4) blur(12px)}
+nav.tabs a[aria-current="page"]{box-shadow:0 6px 14px -6px color-mix(in srgb,var(--teal) 70%,transparent)}
+.hero{position:relative;padding:58px 0 34px;background:radial-gradient(ellipse 70% 60% at 50% 0%,color-mix(in srgb,var(--teal) 9%,transparent),transparent 70%)}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:700;color:var(--teal);background:color-mix(in srgb,var(--teal) 9%,var(--surface));border:1px solid color-mix(in srgb,var(--teal) 22%,transparent);padding:6px 14px;border-radius:999px;margin-bottom:14px}
+.eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--gold)}
+.hero h1{background:linear-gradient(135deg,var(--teal) 30%,#0F7A6E 60%,var(--gold) 120%);-webkit-background-clip:text;background-clip:text;color:transparent;font-size:clamp(54px,14vw,96px);line-height:1.2}
+.hero .lead{font-size:clamp(19px,4.4vw,25px);color:var(--ink)}
+.counters{border:0;gap:10px;max-width:660px}
+.counters div,.counters div+div{border:0;background:var(--surface);border-radius:16px;box-shadow:var(--shadow);padding:16px 8px}
+.sec-head h2{display:flex;align-items:center;gap:10px}
+.sec-head h2::before{content:"";width:6px;height:24px;border-radius:3px;background:linear-gradient(var(--gold),color-mix(in srgb,var(--gold) 40%,transparent))}
+.card,.gcard,.path,.opp,.prog,.steps,.domains,.kpis,.gtype,.stepper,.suggest,.rules-box{box-shadow:var(--shadow);border-color:color-mix(in srgb,var(--line) 70%,transparent)}
+.path,.opp,.prog,.gtype{transition:transform .2s ease,box-shadow .2s ease}
+.path:hover,.opp:hover,.prog:hover,.gtype:hover{transform:translateY(-3px);box-shadow:var(--shadow-h)}
+.btn-primary{background:linear-gradient(135deg,var(--teal),#0F7A6E);box-shadow:0 8px 18px -10px color-mix(in srgb,var(--teal) 80%,transparent)}
+.btn-primary:hover{background:linear-gradient(135deg,#0F6A63,#13887B)}
+.band{background:linear-gradient(160deg,var(--teal-deep),var(--teal));padding:46px 0;margin:18px 0;position:relative}
+.band .sec-head h2{color:#fff}
+.band .sec-head::after{background:rgba(255,255,255,.2)}
+.band .gcard{box-shadow:0 18px 40px -20px rgba(0,0,0,.45);border:0}
+.domain h3 .di{width:30px;height:30px;padding:5px;border-radius:9px;background:var(--gold-soft);vertical-align:-9px}
+.page-title h1{display:flex;align-items:center;gap:12px}
+.page-title h1::after{content:"";flex:1;height:2px;max-width:120px;background:linear-gradient(90deg,transparent,var(--gold))}
+footer.site-foot{margin-top:56px;background:linear-gradient(160deg,var(--teal-deep),var(--teal));color:rgba(255,255,255,.86);border:0;padding:0;text-align:center}
+footer.site-foot .wrap{padding-top:30px;padding-bottom:30px;display:flex;flex-direction:column;align-items:center;gap:6px}
+footer.site-foot .fname{font-family:var(--kufi);font-weight:800;font-size:24px;color:#fff}
+footer.site-foot .fslogan{color:#E8D3A6;font-weight:600}
+footer.site-foot p{margin:0;font-size:13.5px}
+footer.site-foot svg{width:44px;height:44px}
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}.path:hover,.opp:hover,.prog:hover,.gtype:hover{transform:none}}
+@media (max-width:640px){header.site{position:static}}
+html,body{overflow-x:hidden}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+
+<div class="gov"><div class="wrap">
+  <div><b>المملكة العربية السعودية</b> <span>| وزارة التعليم</span></div>
+  <span id="schoolTop"></span>
+</div></div>
+
+<header class="site"><div class="wrap">
+  <a class="brand" href="#home" aria-label="الصفحة الرئيسية">
+    <svg class="brand-mark" viewBox="0 0 48 48" aria-hidden="true">
+      <rect x="1" y="1" width="46" height="46" rx="12" fill="var(--teal)"/>
+      <path d="M8 25 C8 14 18 9 24 12 C30 9 40 14 40 25 C40 29 35 31 30 30 C27 32 21 32 18 30 C13 31 8 29 8 25 Z" fill="none" stroke="var(--gold)" stroke-width="2.4" stroke-linejoin="round"/>
+      <path d="M24 31 V40 M24 35 L19 31 M24 34 L29 30" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/>
+      <path d="M15 40.5 H33" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".7"/>
+    </svg>
+    <div>
+      <div class="brand-name" id="brandName">وارِف</div>
+      <div class="brand-sub" id="brandSub">منصة الشراكة المجتمعية</div>
+    </div>
+  </a>
+  <nav class="tabs" aria-label="أقسام المنصة">
+    <a href="#home" data-view="home">الرئيسية</a>
+    <a href="#skills" data-view="skills">بنك المهارات</a>
+    <a href="#volunteer" data-view="volunteer">الفعاليات</a>
+    <a href="#programs" data-view="programs">البرامج</a>
+    <a href="#gifts" data-view="gifts">مبادرات العطاء</a>
+    <a href="#impact" data-view="impact">لوحة الأثر</a>
+  </nav>
+</div></header>
+
+<main>
+<!-- ============ الرئيسية ============ -->
+<div data-page="home">
+  <div class="hero"><div class="wrap">
+    <span class="eyebrow" id="heroEyebrow">منصة الشراكة المجتمعية</span>
+    <h1 id="heroName">وارِف</h1>
+    <p class="lead" id="heroSub">شراكة يمتد ظلها</p>
+    <p class="desc">في ظل شراكة وارفة، تجتمع المدرسة والأسرة والمجتمع، ليشارك كل منكم بخبرته ووقته في بناء تجربة تعليمية أثرى لبناتنا وأبنائنا.</p>
+    <svg class="canopy" viewBox="0 0 760 180" aria-hidden="true">
+      <path class="draw" style="stroke-dasharray:1800;stroke-dashoffset:1800;fill:color-mix(in srgb,var(--gold) 8%,transparent)" d="M150 104 C108 104 94 68 128 54 C128 24 190 10 230 30 C262 6 330 4 360 26 C396 4 470 6 500 32 C546 14 612 26 612 58 C652 66 648 104 606 104 Z"/>
+      <path class="trunk-line draw" style="stroke-width:5" d="M380 176 C378 150 382 128 380 92"/>
+      <path class="trunk-line draw" d="M380 128 C362 116 346 102 330 84 M380 118 C400 106 418 94 434 76 M380 100 C372 86 366 72 362 58 M380 98 C390 84 396 70 400 56"/>
+      <path class="draw" d="M120 177 H640" style="stroke-width:1.4;opacity:.7"/>
+    </svg>
+    <div class="cta">
+      <a class="btn btn-primary" href="#skills">سجل خبرتك في بنك المهارات</a>
+      <a class="btn btn-ghost" href="#programs">شاركونا في برامجنا</a>
+    </div>
+    <div class="counters" aria-label="أثر الشراكة حتى الآن">
+      <div><b id="c1">٠</b><span>ولي أمر في بنك المهارات</span></div>
+      <div><b id="c2">٠</b><span>مشاركة أسرية</span></div>
+      <div><b id="c3">٠</b><span>فعالية قادمة</span></div>
+    </div>
+  </div></div>
+
+  <section class="block band"><div class="wrap">
+    <div class="sec-head"><h2>أثرنا ينمو معكم</h2></div>
+    <div class="growth">
+      <div class="gcard">
+        <h3 class="ct">شجرة العطاء</h3>
+        <p class="cs">كل ورقة ولي أمر انضم إلى بنك المهارات، ولونها يدل على مجال مشاركته.</p>
+        <svg class="tree" id="tree" viewBox="0 0 400 300" role="img" aria-label="شجرة العطاء"></svg>
+        <div class="legend" id="legend"></div>
+      </div>
+      <div class="gcard goal">
+        <h3 class="ct">هدفنا هذا العام</h3>
+        <div class="ring-wrap">
+          <svg class="ring" viewBox="0 0 180 180" aria-hidden="true"><circle class="bg" cx="90" cy="90" r="76"/><circle class="fg" id="ringFg" cx="90" cy="90" r="76" stroke-dasharray="477.5" stroke-dashoffset="477.5"/></svg>
+          <div class="rv"><b id="ringPct">٠٪</b><span id="ringTxt"></span></div>
+        </div>
+        <p class="cs" id="goalTxt"></p>
+        <a class="btn btn-primary" href="#programs">ساهم في تحقيق الهدف</a>
+      </div>
+    </div>
+  </div></section>
+
+  <section class="block"><div class="wrap">
+    <div class="sec-head"><h2>كيف تشاركون معنا</h2></div>
+    <ol class="steps">
+      <li><div class="n">١</div><h3>سجلوا خبراتكم</h3><p>أضيفوا مهنتكم أو مهارتكم والأوقات المناسبة لكم في بنك المهارات.</p></li>
+      <li><div class="n">٢</div><h3>شاركوا في برامجنا</h3><p>أضيفوا مشاركاتكم في البرامج، وسجلوا حضوركم في فعاليات المدرسة.</p></li>
+      <li><div class="n">٣</div><h3>نتواصل معكم</h3><p>تتواصل منسقة الشراكة معكم لترتيب المشاركة وتوثيقها وشكركم عليها.</p></li>
+    </ol>
+  </div></section>
+
+  <section class="block" style="padding-top:8px"><div class="wrap">
+    <div class="sec-head"><h2>مجالات الشراكة المجتمعية</h2></div>
+    <div class="domains">
+      <div class="domain"><h3>المجال الاجتماعي</h3><p>دعم الفئات الأكثر احتياجا، رعاية الأيتام وأبناء الشهداء، دعم الأسر المحتاجة، الفرص التطوعية، مبادرات خدمة المجتمع، مشاركة أولياء الأمور.</p></div>
+      <div class="domain"><h3>المجال التعليمي</h3><p>البرامج الإثرائية، دروس التقوية، دروس تقوية اللغة الإنجليزية، رعاية الموهوبين.</p></div>
+      <div class="domain"><h3>الثقافة والفنون</h3><p>القراءة، المسرح، الفنون التشكيلية، الخط العربي، التراث والثقافة، البطولات الرياضية.</p></div>
+      <div class="domain"><h3>البيئة والاستدامة</h3><p>التشجير، إعادة التدوير، ترشيد استهلاك المياه والطاقة، المحافظة على البيئة المدرسية.</p></div>
+      <div class="domain"><h3>الصحة وجودة الحياة</h3><p>التوعية الصحية، الصحة النفسية، التغذية السليمة، النشاط البدني.</p></div>
+      <div class="domain"><h3>الأمن والسلامة</h3><p>الأمن والسلامة المدرسية، الإسعافات الأولية، السلامة المرورية، الأمن السيبراني.</p></div>
+      <div class="domain"><h3>المجال التقني</h3><p>الذكاء الاصطناعي، البرمجة، الأمن السيبراني، الابتكار وريادة الأعمال.</p></div>
+      <div class="domain day"><b>٢٣ مارس</b><p>يوم المسؤولية الاجتماعية في المملكة العربية السعودية</p></div>
+    </div>
+    <div class="facts">
+      <div><h4>الفئات المستهدفة</h4><p>الطلبة، والفئات الأكثر احتياجا، والموهوبون، وذوو الإعاقة، وأولياء الأمور، ومنسوبو المدرسة.</p></div>
+      <div><h4>الجهات التي يمكن الشراكة معها</h4><p>القطاع الحكومي، والقطاع الخاص، والقطاع غير الربحي.</p></div>
+    </div>
+  </div></section>
+
+  <section class="block" style="padding-top:8px"><div class="wrap">
+    <div class="paths">
+      <div class="path">
+        <h3>بنك مهارات أولياء الأمور</h3>
+        <p>طبيبة، مهندس، مصممة، خطاط، مسعف… خبرتكم تفتح لطلابنا نافذة على العالم الحقيقي.</p>
+        <a class="btn btn-primary" href="#skills">سجل خبرتك</a>
+      </div>
+      <div class="path alt">
+        <h3>فعاليات الشراكة</h3>
+        <p>لقاءات أسرية وأيام عالمية ومناسبات مدرسية، سجلوا حضوركم ومشاركتكم فيها بضغطة.</p>
+        <a class="btn btn-ghost" href="#volunteer">اعرض الفعاليات</a>
+      </div>
+    </div>
+  </div></section>
+</div>
+
+<!-- ============ بنك المهارات ============ -->
+<div data-page="skills" hidden>
+  <div class="wrap">
+    <div class="page-title">
+      <h1>اكتشف دورك في الشراكة</h1>
+      <p>أربع خطوات قصيرة نتعرف فيها على خبرتك، ونكشف لك دورك الأنسب في شراكة المدرسة. لا تظهر بياناتك إلا لمنسقات المسؤولية المجتمعية.</p>
+    </div>
+    <div class="stepper" id="stepper">
+      <div class="progress"><div class="pbar"><i id="pfill"></i></div><span id="pstep"></span></div>
+      <form id="skillForm" novalidate>
+        <section class="step" data-step="1">
+          <h2 class="q">في أي مجال تحب أن تشارك؟</h2>
+          <p class="qh">اختر المجال الأقرب لخبرتك أو اهتمامك.</p>
+          <div class="tiles" id="t_field"></div>
+        </section>
+        <section class="step" data-step="2" hidden>
+          <h2 class="q">كيف تحب أن تشارك؟</h2>
+          <p class="qh">اختر كل ما يناسبك.</p>
+          <div class="tiles" id="t_types"></div>
+        </section>
+        <section class="step" data-step="3" hidden>
+          <h2 class="q">متى يناسبك الوقت؟</h2>
+          <p class="qh">يمكنك اختيار أكثر من وقت.</p>
+          <div class="tiles" id="t_times"></div>
+        </section>
+        <section class="step" data-step="4" hidden>
+          <h2 class="q">عرفنا بنفسك</h2>
+          <p class="qh" style="margin-bottom:18px">آخر خطوة، ثم نكشف لك دورك.</p>
+          <div class="grid">
+            <div><label class="lbl" for="s_name">الاسم <span class="req">*</span></label><input type="text" id="s_name" autocomplete="name"></div>
+            <div><label class="lbl" for="s_rel">صلة القرابة بالطالب/ـة <span class="req">*</span></label>
+              <select id="s_rel"><option value="">اختر</option><option>أم</option><option>أب</option><option>أخت</option><option>أخ</option><option>ولي أمر آخر</option></select></div>
+            <div><label class="lbl" for="s_phone">رقم الجوال <span class="req">*</span></label><input type="tel" id="s_phone" inputmode="numeric" placeholder="05XXXXXXXX" autocomplete="tel"></div>
+            <div><label class="lbl" for="s_grade">صف الطالب/ـة</label>
+              <select id="s_grade"><option value="">اختر</option><option>الطفولة المبكرة</option><option>الأول</option><option>الثاني</option><option>الثالث</option><option>الرابع</option><option>الخامس</option><option>السادس</option></select></div>
+            <div class="full"><label class="lbl" for="s_job">المهنة أو المهارة <span class="req">*</span></label><input type="text" id="s_job" placeholder="مثال: طبيبة أسنان، مصمم جرافيك"></div>
+            <div class="full"><label class="lbl" for="s_notes">فكرة تحب تقدمها لطلابنا (اختياري)</label><textarea id="s_notes" maxlength="500"></textarea></div>
+            <div class="full"><label class="consent"><input type="checkbox" id="s_consent"><span>أوافق على تواصل المدرسة معي بخصوص المشاركة، وعلى حفظ بياناتي لدى منسقات المسؤولية المجتمعية فقط.</span></label></div>
+          </div>
+          <div class="hp" aria-hidden="true"><input type="text" id="s_website" tabindex="-1" autocomplete="off"></div>
+        </section>
+        <div class="step-nav">
+          <button class="btn btn-ghost" type="button" id="prevBtn">السابق</button>
+          <button class="btn btn-primary" type="button" id="nextBtn">التالي</button>
+          <button class="btn btn-primary" type="submit" id="submitBtn">اكشف دوري</button>
+          <span class="msg" role="status" aria-live="polite"></span>
+        </div>
+      </form>
+    </div>
+
+    <div id="skillDone" hidden>
+      <div class="persona">
+        <div class="pi" id="pIcon"></div>
+        <small>دورك في الشراكة</small>
+        <h2 id="pTitle"></h2>
+        <p id="pDesc"></p>
+        <div class="chips" id="dChips"></div>
+      </div>
+      <div class="suggest"><h3>فعاليات تناسبك</h3><div id="suggList"></div></div>
+      <div class="cert" id="cert"><div class="cert-in">
+        <div class="cert-top"><span>المملكة العربية السعودية | وزارة التعليم</span><span id="certSchool"></span></div>
+        <h3>شهادة شكر وتقدير</h3>
+        <p>تتقدم المدرسة بخالص الشكر والتقدير إلى</p>
+        <div class="cert-name" id="certName"></div>
+        <p>لانضمامكم إلى بنك مهارات أولياء الأمور بدور <b id="certField"></b>، ومبادرتكم بالمشاركة في بناء تجربة تعليمية أثرى لبناتنا وأبنائنا.</p>
+        <div class="cert-foot"><span id="certDate"></span><span>منسقات المسؤولية المجتمعية</span></div>
+      </div></div>
+      <div class="cta" style="margin-top:18px">
+        <button class="btn btn-primary" type="button" id="printCert">حفظ الشهادة PDF</button>
+        <button class="btn btn-ghost" type="button" id="againBtn">تسجيل شخص آخر</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ فرص التطوع ============ -->
+<div data-page="volunteer" hidden>
+  <div class="wrap">
+    <div class="page-title">
+      <h1>فعاليات الشراكة</h1>
+      <p>فعاليات تجمع المدرسة بالأسر. سجلوا حضوركم أو مشاركتكم ليسهل علينا التنظيم والتواصل معكم.</p>
+    </div>
+    <div class="opps" id="oppList" aria-live="polite"><div class="empty">جار تحميل الفعاليات…</div></div>
+    <div class="notice" style="margin-top:18px">تبغون تتطوعون رسميا؟ الفرص التطوعية وتوثيق الساعات وإصدار الشهادات تكون عبر <a href="https://nvg.gov.sa/" target="_blank" rel="noopener">المنصة الوطنية للعمل التطوعي</a>، وتعلن المدرسة عن فرصها المعتمدة هناك عند توفرها.</div>
+  </div>
+</div>
+
+<!-- ============ البرامج ============ -->
+<div data-page="programs" hidden>
+  <div class="wrap">
+    <div class="page-title">
+      <h1>برامج الشراكة مع الأسرة</h1>
+      <p>برامج ومبادرات تجمع المدرسة بالأسر. شاركونا ما نفذتموه مع أبنائكم، وتعرض المشاركات هنا بعد مراجعة المدرسة وبموافقتكم.</p>
+    </div>
+    <div class="progs" id="progList" aria-live="polite"><div class="empty">جار تحميل البرامج…</div></div>
+  </div>
+</div>
+
+<!-- ============ الهبات ============ -->
+<div data-page="gifts" hidden>
+  <div class="wrap">
+    <div class="page-title">
+      <h1>مبادرات العطاء</h1>
+      <p>نعتز بكل أسرة وجهة تبادر من تلقاء نفسها بإثراء البيئة التعليمية لأبنائنا. هنا تتعرفون على أنواع المبادرات ومجالاتها، وكيف تتم خطوة بخطوة.</p>
+    </div>
+
+    <div class="sec-head"><h2>أنواع المبادرة</h2></div>
+    <div class="gtypes">
+      <div class="gtype"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7l9-4 9 4-9 4z"/><path d="M3 7v10l9 4 9-4V7M12 11v10"/></svg><h3>عينية</h3><p>أدوات ومواد تثري التعلم، مثل الألعاب التعليمية، وأدوات الفنون والأنشطة، وحقائب الإسعافات الأولية.</p></div>
+      <div class="gtype"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 11V6a2 2 0 0 1 4 0v4M11 9V4a2 2 0 0 1 4 0v6M15 8a2 2 0 0 1 4 0v6a7 7 0 0 1-7 7h-1a7 7 0 0 1-6-3.5L3 14a2 2 0 0 1 3.4-2L8 14"/></svg><h3>خدمية</h3><p>خدمة يقدمها المبادر، مثل ورشة متخصصة أو تهيئة ركن تعليمي.</p></div>
+      <div class="gtype"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M2 20h20M9 16v4M15 16v4"/></svg><h3>تقنية</h3><p>أجهزة أو برامج أو حلول تقنية تدعم التعلم.</p></div>
+    </div>
+
+    <div class="sec-head" style="margin-top:30px"><h2>مجالات المبادرة</h2></div>
+    <div class="chips" id="giftDomains" style="justify-content:flex-start;margin-top:0"></div>
+
+    <div class="sec-head" style="margin-top:30px"><h2>كيف تتم المبادرة؟</h2></div>
+    <ol class="steps">
+      <li><div class="n">١</div><h3>تبدون رغبتكم</h3><p>عبر النموذج أدناه، في دقيقة واحدة.</p></li>
+      <li><div class="n">٢</div><h3>تعرض للموافقة</h3><p>تعرضها المدرسة على صاحب الصلاحية وفق الإجراءات المنظمة.</p></li>
+      <li><div class="n">٣</div><h3>نتواصل معكم</h3><p>لإتمام الاستمارة والتسليم، ونشكركم على عطائكم.</p></li>
+    </ol>
+
+    <details class="rules-box">
+      <summary>ضوابط تنظيمية مختصرة</summary>
+      <ul class="rules">
+        <li>المبادرة تنبع من رغبتكم، والمدرسة لا تطلب الهبات.</li>
+        <li>تكون المبادرة عينية أو خدمية أو تقنية.</li>
+        <li>دون أي مقابل أو ميزة للمبادر أو لمنسوبات المدرسة.</li>
+        <li>ألا يرتبط المبادر بعقد مع المدرسة أو إدارة التعليم.</li>
+        <li>تتم بعد موافقة صاحب الصلاحية، وفق القواعد المنظمة لتلقي الجهات الحكومية الهبات (قرار مجلس الوزراء رقم ٣٦٥ لعام ١٤٣٦هـ).</li>
+      </ul>
+    </details>
+
+    <form class="card" id="giftForm" novalidate style="margin-top:18px">
+      <h3 style="font-family:var(--kufi);margin:0 0 4px;font-size:19px">أبد رغبتك في مبادرة</h3>
+      <p class="hint" style="margin:0 0 6px">نموذج قصير، ونتواصل معكم بعده.</p>
+      <h4 class="fsec">بيانات المبادر</h4>
+      <div class="grid">
+        <div><label class="lbl" for="g_name">الاسم أو اسم الجهة <span class="req">*</span></label><input type="text" id="g_name"></div>
+        <div><label class="lbl" for="g_kind">الصفة <span class="req">*</span></label>
+          <select id="g_kind"><option value="">اختر</option><option>فرد</option><option>جهة حكومية</option><option>قطاع خاص</option><option>قطاع غير ربحي</option><option>أخرى</option></select></div>
+        <div><label class="lbl" for="g_rep">اسم ممثل الجهة</label><input type="text" id="g_rep" placeholder="للجهات فقط"></div>
+        <div><label class="lbl" for="g_phone">رقم الجوال <span class="req">*</span></label><input type="tel" id="g_phone" inputmode="numeric" placeholder="05XXXXXXXX"></div>
+      </div>
+      <h4 class="fsec">بيانات المبادرة</h4>
+      <span class="lbl">نوع المبادرة <span class="req">*</span></span>
+      <div class="choices" id="g_type">
+        <label class="choice"><input type="radio" name="g_type" value="عينية"><span>عينية</span></label>
+        <label class="choice"><input type="radio" name="g_type" value="خدمية"><span>خدمية</span></label>
+        <label class="choice"><input type="radio" name="g_type" value="تقنية"><span>تقنية</span></label>
+        <label class="choice"><input type="radio" name="g_type" value="أخرى"><span>أخرى</span></label>
+      </div>
+      <div class="grid" style="margin-top:18px">
+        <div class="full"><label class="lbl" for="g_item">وصف المبادرة <span class="req">*</span></label><textarea id="g_item" maxlength="400" placeholder="مثال: ألعاب تعليمية لركن الطفولة المبكرة"></textarea></div>
+        <div><label class="lbl" for="g_qty">الكمية / العدد</label><input type="text" id="g_qty"></div>
+        <div><label class="lbl" for="g_use">الغرض منها</label><input type="text" id="g_use" placeholder="مثال: تجهيز ركن الأنشطة"></div>
+      </div>
+      <h4 class="fsec">إقرار</h4>
+      <div style="display:grid;gap:10px">
+        <label class="consent"><input type="checkbox" id="g_c1"><span>أقدم هذه المبادرة برغبتي الشخصية، ولم تطلبها المدرسة، ودون أي مقابل أو التزام.</span></label>
+        <label class="consent"><input type="checkbox" id="g_c2"><span>لا تربطني بالمدرسة أو إدارة التعليم علاقة تعاقدية، وأعلم أن إتمام المبادرة يكون بعد موافقة صاحب الصلاحية.</span></label>
+      </div>
+      <div class="hp" aria-hidden="true"><input type="text" id="g_website" tabindex="-1" autocomplete="off"></div>
+      <div class="form-foot"><button class="btn btn-primary" type="submit">إرسال الرغبة</button><span class="msg" role="status" aria-live="polite"></span></div>
+    </form>
+    <div class="card done" id="giftDone" hidden></div>
+  </div>
+</div>
+
+<!-- ============ لوحة الأثر ============ -->
+<div data-page="impact" hidden>
+  <div class="wrap">
+    <div class="page-title">
+      <h1>لوحة الأثر</h1>
+      <p>متابعة التسجيلات وقياس أثر الشراكة. هذه اللوحة لمنسقات المسؤولية المجتمعية وقيادة المدرسة فقط.</p>
+    </div>
+
+    <form class="card gate" id="gateForm">
+      <label class="lbl" for="g_code">رمز الدخول</label>
+      <input type="password" id="g_code" autocomplete="current-password" required>
+      <p class="hint" id="gateHint"></p>
+      <div class="form-foot" style="margin-top:14px;padding-top:14px">
+        <button class="btn btn-primary" type="submit">دخول</button>
+        <span class="msg" role="status" aria-live="polite"></span>
+      </div>
+    </form>
+
+    <div id="dash" hidden>
+      <div class="kpis">
+        <div class="kpi"><b id="k1">0</b><span>مسجلون في بنك المهارات</span></div>
+        <div class="kpi"><b id="k2">0</b><span>تسجيلات الفعاليات</span></div>
+        <div class="kpi"><b id="k3">0</b><span>مشاركات البرامج</span></div>
+        <div class="kpi"><b id="k4">0</b><span>مبادرات عطاء بانتظار الموافقة</span></div>
+      </div>
+      <div class="dash-grid">
+        <div class="card"><h3>الخبرات حسب مجال الشراكة</h3><div class="bars" id="barsField"></div></div>
+        <div class="card"><h3>التسجيل حسب الفعالية</h3><div class="bars" id="barsOpp"></div></div>
+      </div>
+      <div class="subtabs" role="tablist">
+        <button type="button" role="tab" aria-selected="true" data-sub="skillsT">بنك المهارات</button>
+        <button type="button" role="tab" aria-selected="false" data-sub="volT">المسجلون في الفعاليات</button>
+        <button type="button" role="tab" aria-selected="false" data-sub="postT">مشاركات البرامج <span id="pendBadge"></span></button>
+        <button type="button" role="tab" aria-selected="false" data-sub="giftT">سجل الهبات</button>
+      </div>
+      <div class="tbl-wrap" id="skillsT"></div>
+      <div class="tbl-wrap" id="volT" hidden></div>
+      <div class="tbl-wrap" id="postT" hidden></div>
+      <div class="tbl-wrap" id="giftT" hidden></div>
+      <div class="toolbar">
+        <button class="btn btn-ghost" type="button" id="exportBtn">تصدير الجدول المعروض (CSV)</button>
+        <button class="btn btn-ghost" type="button" id="logoutBtn">خروج</button>
+      </div>
+    </div>
+  </div>
+</div>
+</main>
+
+<dialog id="volDialog" aria-labelledby="dTitle">
+  <div class="d-head"><h2 id="dTitle">التسجيل في الفعالية</h2><button class="x" type="button" id="dClose" aria-label="إغلاق">×</button></div>
+  <form class="d-body" id="volForm" novalidate>
+    <p id="dOpp" style="margin:0 0 16px;color:var(--ink-2)"></p>
+    <div style="display:grid;gap:16px">
+      <div><label class="lbl" for="v_name">الاسم <span class="req">*</span></label><input type="text" id="v_name" autocomplete="name" required></div>
+      <div><label class="lbl" for="v_rel">صلة القرابة بالطالب/ـة <span class="req">*</span></label>
+        <select id="v_rel" required><option value="">اختر</option><option>أم</option><option>أب</option><option>أخت</option><option>أخ</option><option>ولي أمر آخر</option><option>من المجتمع المحلي</option></select></div>
+      <div><label class="lbl" for="v_phone">رقم الجوال <span class="req">*</span></label><input type="tel" id="v_phone" inputmode="numeric" placeholder="05XXXXXXXX" autocomplete="tel" required></div>
+      <label class="consent"><input type="checkbox" id="v_consent" required><span>أوافق على تواصل المدرسة معي لتأكيد المشاركة.</span></label>
+    </div>
+    <div class="hp" aria-hidden="true"><input type="text" id="v_website" tabindex="-1" autocomplete="off"></div>
+    <div class="form-foot">
+      <button class="btn btn-primary" type="submit">تأكيد التسجيل</button>
+      <span class="msg" role="status" aria-live="polite"></span>
+    </div>
+  </form>
+  <div class="d-body" id="volDone" hidden></div>
+</dialog>
+
+<dialog id="postDialog" aria-labelledby="pTitleD">
+  <div class="d-head"><h2 id="pTitleD">أضف مشاركتك</h2><button class="x" type="button" id="pClose" aria-label="إغلاق">×</button></div>
+  <form class="d-body" id="postForm" novalidate>
+    <p id="pdProg" style="margin:0 0 16px;color:var(--ink-2)"></p>
+    <div style="display:grid;gap:16px">
+      <div><label class="lbl" for="p_text">ماذا نفذتم؟ <span class="req">*</span></label><textarea id="p_text" maxlength="600" placeholder="مثال: قرأت مع ابنتي قصة يوميا هذا الأسبوع، وصنعنا ركن قراءة صغيرا في البيت."></textarea></div>
+      <div>
+        <span class="lbl">الصور (حتى ٣ صور)</span>
+        <label class="upload"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="15" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-8 9"/></svg><b>اضغط لإرفاق الصور</b><span>من الكاميرا أو الاستوديو</span><input type="file" id="p_files" accept="image/*" multiple></label>
+        <div class="thumbs" id="p_thumbs"></div>
+      </div>
+      <div><label class="lbl" for="p_name">الاسم <span class="req">*</span></label><input type="text" id="p_name" autocomplete="name"></div>
+      <div><label class="lbl" for="p_rel">صلة القرابة بالطالب/ـة <span class="req">*</span></label>
+        <select id="p_rel"><option value="">اختر</option><option>أم</option><option>أب</option><option>أخت</option><option>أخ</option><option>ولي أمر آخر</option></select></div>
+      <div><label class="lbl" for="p_grade">صف الطالب/ـة</label>
+        <select id="p_grade"><option value="">اختر</option><option>الطفولة المبكرة</option><option>الأول</option><option>الثاني</option><option>الثالث</option><option>الرابع</option><option>الخامس</option><option>السادس</option></select></div>
+      <div><label class="lbl" for="p_phone">رقم الجوال <span class="req">*</span></label><input type="tel" id="p_phone" inputmode="numeric" placeholder="05XXXXXXXX" autocomplete="tel"></div>
+      <label class="consent"><input type="checkbox" id="p_own"><span>أؤكد أنني ولي أمر الطالب/ـة، وأن الصور المرفقة من تصويري. <span class="req">*</span></span></label>
+      <label class="consent"><input type="checkbox" id="p_show"><span>أوافق على عرض مشاركتي وصوري في المنصة بعد مراجعة المدرسة (بدون ذكر اسمي).</span></label>
+    </div>
+    <div class="hp" aria-hidden="true"><input type="text" id="p_website" tabindex="-1" autocomplete="off"></div>
+    <div class="form-foot"><button class="btn btn-primary" type="submit">إرسال المشاركة</button><span class="msg" role="status" aria-live="polite"></span></div>
+  </form>
+  <div class="d-body" id="postDone" hidden></div>
+</dialog>
+
+<div id="giftPrint" aria-hidden="true"></div>
+
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="معرض الصور">
+  <button class="lb-x" type="button" id="lbX" aria-label="إغلاق">×</button>
+  <img id="lbImg" alt="">
+  <div class="lb-bar"><button type="button" id="lbPrev" aria-label="الصورة السابقة">›</button><span id="lbC"></span><button type="button" id="lbNext" aria-label="الصورة التالية">‹</button></div>
+</div>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <svg viewBox="0 0 48 48" aria-hidden="true"><rect x="1" y="1" width="46" height="46" rx="12" fill="rgba(255,255,255,.1)"/><path d="M8 25 C8 14 18 9 24 12 C30 9 40 14 40 25 C40 29 35 31 30 30 C27 32 21 32 18 30 C13 31 8 29 8 25 Z" fill="none" stroke="#E8D3A6" stroke-width="2.4" stroke-linejoin="round"/><path d="M24 31 V40 M24 35 L19 31 M24 34 L29 30" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/></svg>
+    <div class="fname">وارِف</div>
+    <div class="fslogan">شراكة يمتد ظلها</div>
+    <p id="footSchool"></p>
+    <p>إعداد: منسقات المسؤولية المجتمعية</p>
+  </div>
+</footer>
+
+<script>
+/* =========================================================
+   الإعدادات — عدلي هنا فقط
+   scriptUrl: رابط تطبيق Google Apps Script بعد النشر.
+   إذا ترك فارغا تعمل المنصة في وضع التجربة (تحفظ البيانات على هذا الجهاز فقط).
+   ========================================================= */
+const CONFIG = {
+  platformName: "وارِف",
+  subtitle: "منصة الشراكة المجتمعية",
+  slogan: "شراكة يمتد ظلها",
+  school: "الطفولة المبكرة بالابتدائية الثانية والخمسين بعد المئة",
+  goalParticipations: 100,
+  scriptUrl: "https://script.google.com/macros/s/AKfycbwsY8bH2IHpHAWBr-NxOifqFBIIh_4Go40KQTUwsQOA15jm5kdNGDmlfrHzAi8f0H_Nyw/exec"
+};
+
+const DEMO = !CONFIG.scriptUrl;
+const DEMO_KEY = "partnership_demo_v9";
+const DEMO_CODE = "1234";
+const DEMO_OPPS = [
+  {id:"op0",domain:"الثقافة والفنون",title:"اليوم الوطني السعودي ٩٦",desc:"احتفاء المدرسة باليوم الوطني بمشاركة الأسر في الأركان التراثية والفقرات الوطنية.",date:"2026-09-23",time:"8:00 – 11:00 ص",place:"المدرسة",hours:0,seats:10,open:false,done:true,attended:10},
+  {id:"op2",domain:"الثقافة والفنون",title:"اليوم العالمي للغة العربية",desc:"ركن للخط العربي وأنشطة لغوية تفاعلية تشارك فيها الأسر.",date:"2026-12-18",time:"8:30 – 10:30 ص",place:"ساحة المدرسة",hours:0,seats:20,open:true},
+  {id:"op3",domain:"الصحة وجودة الحياة",title:"أسبوع الصحة المدرسية",desc:"لقاءات توعوية قصيرة يقدمها أولياء أمور من القطاع الصحي.",date:"2027-01-12",time:"9:00 – 11:00 ص",place:"مصادر التعلم",hours:0,seats:10,open:true},
+  {id:"op4",domain:"المجال الاجتماعي",nvgUrl:"https://nvg.gov.sa/",title:"يوم المسؤولية الاجتماعية",desc:"مبادرة خدمة مجتمعية مشتركة بين المدرسة والأسر والجهات الشريكة.",date:"2027-03-23",time:"8:00 – 12:00 م",place:"المدرسة",hours:4,seats:30,open:true}
+];
+
+const DOMAINS = [
+  {name:"المجال الاجتماعي", persona:"صانع الأثر الاجتماعي", hint:"دعم الأسر والمبادرات المجتمعية", desc:"تمد يدك لمن يحتاجها، وتقرب المدرسة من أسرها ومجتمعها."},
+  {name:"المجال التعليمي", persona:"ملهم المعرفة", hint:"برامج إثرائية ودروس تقوية", desc:"تفتح لطلابنا أبوابا جديدة للتعلم والاكتشاف."},
+  {name:"الثقافة والفنون", persona:"سفير الثقافة والفنون", hint:"قراءة ومسرح وخط عربي", desc:"تزرع في طلابنا حب الجمال والهوية والإبداع."},
+  {name:"البيئة والاستدامة", persona:"حارس البيئة", hint:"تشجير وإعادة تدوير", desc:"تعلم طلابنا أن الأرض أمانة، وأن التغيير يبدأ من مدرستهم."},
+  {name:"الصحة وجودة الحياة", persona:"صانع الحياة الصحية", hint:"توعية صحية وتغذية ونشاط", desc:"تساعد طلابنا على عادات صحية ترافقهم مدى الحياة."},
+  {name:"الأمن والسلامة", persona:"درع الأمان", hint:"إسعافات أولية وسلامة مرورية", desc:"تمنح طلابنا وعيا يحميهم ويحمي من حولهم."},
+  {name:"المجال التقني", persona:"رائد المستقبل الرقمي", hint:"برمجة وذكاء اصطناعي", desc:"تقرب طلابنا من مهارات المستقبل وتقنياته."}
+];
+const DCOLORS = ["#2E8B7A","#3B6FB6","#B5577A","#4E9A3A","#D0663F","#C9A23A","#6B5BB5"];
+
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const toLatin = s => String(s||"").replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/[۰-۹]/g,d=>"۰۱۲۳۴۵۶۷۸۹".indexOf(d)).replace(/\s|-/g,"");
+const arNum = n => Number(n||0).toLocaleString("ar-SA");
+const esc = s => String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+/* ---------- طبقة البيانات ---------- */
+function demoSeed(){
+  const names = ["نورة","عبدالله","هيفاء","سارة","محمد","ريم","خالد","منى","عبير","فهد","لمى","أمل","تركي","جواهر","مها","سلطان","دانة","رنا"];
+  const skills = names.map((n,i)=>({name:n+" (مثال)", relation:i%3?"أم":"أب", phone:"0500000"+String(100+i), grade:"", field:DOMAINS[(i*3)%7].name, job:"مثال توضيحي", types:"محاضرة توعوية", times:"بعد الدوام", notes:"", date:new Date(Date.now()-i*864e5).toISOString()}));
+  const volunteers = [["op2",3],["op3",3],["op2",2],["op3",2],["op3",2],["op3",3],["op4",4]].map(([id,h],i)=>({oppId:id, name:names[i]+" (مثال)", relation:"أم", phone:"0500000"+String(200+i), hours:h, oppTitle:(DEMO_OPPS.find(o=>o.id===id)||{}).title, date:new Date(Date.now()-i*432e5).toISOString()}));
+  return {skills, volunteers};
+}
+function demoPhotos(n){
+  const pal=[["#0B5A55","#137A72"],["#A9884F","#C9A96A"],["#1E7B4E","#4E9A3A"],["#2E8B7A","#0B5A55"]];
+  return Array.from({length:n},(_,i)=>{ const [a,b]=pal[i%pal.length];
+    const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient></defs><rect width="600" height="600" fill="url(#g)"/><text x="300" y="320" font-size="54" text-anchor="middle" fill="#fff" font-family="Tahoma">معاينة ${i+1}</text></svg>`;
+    const u="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg); return {thumb:u, full:u}; });
+}
+const DEMO_PROGRAMS = [
+  {id:"pr1", title:"اليوم الوطني السعودي", desc:"شاركونا احتفالكم باليوم الوطني مع أبنائكم: زينة البيت، أو الزي التراثي، أو نشاط عن حب الوطن.", owner:"", open:true},
+  {id:"pr2", title:"عين على القيم", desc:"نعزز القيم معا في البيت والمدرسة. شاركونا موقفا أو نشاطا عززتم فيه قيمة مع أبنائكم، مثل الصدق أو الاحترام أو التعاون.", owner:"", open:true}
+];
+function demoPosts(){
+  return [
+    {id:"x1", programId:"pr2", text:"اخترنا قيمة الصدق هذا الأسبوع، وكنا نتحدث كل مساء عن موقف صدقنا فيه.", relation:"أم", grade:"الثاني", show:"نعم", status:"معتمدة", photos:[], name:"مثال", phone:"0500000301", date:new Date(Date.now()-3*864e5).toISOString()},
+    {id:"x2", programId:"pr2", text:"صممنا لوحة للتعاون في البيت، وكل فرد يكتب عليها ما ساعد به غيره.", relation:"أب", grade:"الأول", show:"نعم", status:"معتمدة", photos:[], name:"مثال", phone:"0500000302", date:new Date(Date.now()-5*864e5).toISOString()},
+    {id:"x3", programId:"pr1", text:"زينا البيت بالأخضر ولبست ابنتي الزي التراثي، ورسمنا معا خريطة المملكة.", relation:"أم", grade:"الرابع", show:"نعم", status:"بانتظار المراجعة", photos:[], name:"مثال", phone:"0500000303", date:new Date(Date.now()-864e5).toISOString()}
+  ];
+}
+function demoStore(){
+  let d;
+  try{ const raw = localStorage.getItem(DEMO_KEY); d = raw ? JSON.parse(raw) : demoSeed(); }
+  catch(e){ d = window.__demo || demoSeed(); }
+  if(window.__demo) d = window.__demo;
+  if(!d.posts) d.posts = demoPosts();
+  if(!d.gifts) d.gifts = [{id:"g1", date:new Date(Date.now()-2*864e5).toISOString(), name:"مثال: مكتبة الحي", kind:"قطاع خاص", rep:"مثال", phone:"0500000401", gtype:"عينية", item:"٢٠ لعبة تعليمية للطفولة المبكرة", qty:"٢٠", use:"تجهيز ركن الأنشطة", status:"بانتظار الموافقة", approval:""}];
+  window.__demo = d; try{ localStorage.setItem(DEMO_KEY, JSON.stringify(d)); }catch(e){}
+  return d;
+}
+function demoSave(d){ window.__demo = d; try{ localStorage.setItem(DEMO_KEY, JSON.stringify(d)); }catch(e){} }
+
+async function apiGet(params){
+  if(DEMO) return demoGet(params);
+  const url = CONFIG.scriptUrl + "?" + new URLSearchParams(params).toString();
+  const r = await fetch(url);
+  return r.json();
+}
+async function apiPost(body){
+  if(DEMO) return demoPost(body);
+  const r = await fetch(CONFIG.scriptUrl, {method:"POST", body:JSON.stringify(body)});
+  return r.json();
+}
+function withCounts(d){
+  return DEMO_OPPS.map(o=>({...o, taken:d.volunteers.filter(v=>v.oppId===o.id).length}));
+}
+function demoGet(p){
+  const d = demoStore();
+  if(p.action==="opps") return {ok:true, opps:withCounts(d)};
+  if(p.action==="summary"){ const fields = {}; d.skills.forEach(x=>fields[x.field]=(fields[x.field]||0)+1);
+    return {ok:true, skills:d.skills.length, participations:d.skills.length+d.volunteers.length+(d.posts||[]).length, opps:DEMO_OPPS.filter(o=>o.open).length, fields}; }
+  if(p.action==="programs") return {ok:true, programs:DEMO_PROGRAMS.filter(x=>x.open).map(pr=>({...pr, photos: pr.id==="pr1" ? demoPhotos(14) : [],
+      count:d.posts.filter(x=>x.programId===pr.id).length,
+      approved:d.posts.filter(x=>x.programId===pr.id && x.status==="معتمدة" && x.show==="نعم").slice().reverse().slice(0,12)
+        .map(x=>({text:x.text, who:whoLabel(x), date:x.date, photos:x.photos||[]}))}))};
+  if(p.action==="stats"){
+    if(p.code!==DEMO_CODE) return {ok:false, error:"الرمز غير صحيح."};
+    return {ok:true, skills:d.skills, volunteers:d.volunteers, opps:withCounts(d),
+      posts:d.posts.map(x=>({...x, programTitle:(DEMO_PROGRAMS.find(pr=>pr.id===x.programId)||{}).title, photoLinks:x.photos||[]})), gifts:d.gifts||[]};
+  }
+  return {ok:false,error:"طلب غير معروف."};
+}
+function demoPost(b){
+  const d = demoStore(); const now = new Date().toISOString();
+  if(b.type==="skill"){ d.skills.push({...b, date:now}); demoSave(d); return {ok:true}; }
+  if(b.type==="post"){
+    if(!DEMO_PROGRAMS.some(x=>x.id===b.programId && x.open)) return {ok:false,error:"هذا البرنامج غير متاح."};
+    d.posts.push({...b, id:"p"+Date.now().toString(36), status:"بانتظار المراجعة", date:now}); demoSave(d); return {ok:true};
+  }
+  if(b.type==="gift"){ d.gifts = d.gifts||[]; d.gifts.push({...b, id:"g"+Date.now().toString(36), status:"بانتظار الموافقة", approval:"", date:now}); demoSave(d); return {ok:true}; }
+  if(b.type==="giftReview"){
+    if(b.code!==DEMO_CODE) return {ok:false,error:"الرمز غير صحيح."};
+    const x = (d.gifts||[]).find(y=>y.id===b.id); if(!x) return {ok:false,error:"غير موجود."};
+    x.status = b.decision; demoSave(d); return {ok:true};
+  }
+  if(b.type==="review"){
+    if(b.code!==DEMO_CODE) return {ok:false,error:"الرمز غير صحيح."};
+    const x = d.posts.find(y=>y.id===b.id); if(!x) return {ok:false,error:"المشاركة غير موجودة."};
+    x.status = b.decision; demoSave(d); return {ok:true};
+  }
+  if(b.type==="volunteer"){
+    const o = DEMO_OPPS.find(x=>x.id===b.oppId);
+    if(!o) return {ok:false,error:"الفعالية غير موجودة."};
+    if(d.volunteers.some(v=>v.oppId===b.oppId && v.phone===b.phone)) return {ok:false,error:"هذا الرقم مسجل في هذه الفعالية مسبقا."};
+    if(d.volunteers.filter(v=>v.oppId===b.oppId).length>=o.seats) return {ok:false,error:"اكتملت المقاعد في هذه الفعالية."};
+    d.volunteers.push({...b, oppTitle:o.title, hours:o.hours, date:now}); demoSave(d); return {ok:true};
+  }
+  return {ok:false,error:"طلب غير معروف."};
+}
+
+/* ---------- التنقل ---------- */
+function show(view){
+  const v = ["home","skills","volunteer","programs","gifts","impact"].includes(view) ? view : "home";
+  $$("[data-page]").forEach(p=>p.hidden = p.dataset.page!==v);
+  $$("nav.tabs a").forEach(a=>{ if(a.dataset.view===v) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
+  if(v==="volunteer") oppsP = loadOpps();
+  if(v==="programs") loadPrograms();
+  if(v==="home") loadSummary();
+  window.scrollTo(0,0);
+}
+let oppsP = Promise.resolve();
+function go(view){ show(view); try{ history.replaceState(null,"","#"+view); }catch(_){} }
+window.addEventListener("hashchange",()=>show(location.hash.slice(1)));
+document.addEventListener("click", e=>{
+  const a = e.target.closest('a[href^="#"]'); if(!a) return;
+  e.preventDefault(); go(a.getAttribute("href").slice(1));
+});
+
+/* ---------- أدوات النماذج ---------- */
+function setMsg(form, text, kind){ const m = form.querySelector(".msg"); m.textContent = text; m.className = "msg " + (kind||""); }
+function validPhone(p){ return /^05\d{8}$/.test(p); }
+function checked(sel){ return $$(sel+" input:checked").map(i=>i.value); }
+
+/* ---------- مكتشف الدور (بنك المهارات) ---------- */
+const TYPES = [
+  ["محاضرة توعوية","أشارك بمعلومة أو تجربة",'<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/>'],
+  ["ورشة عمل","تدريب عملي قصير",'<path d="M14 7l3-3 3 3-3 3M4 20l9-9M15 13l5 5-2 2-5-5"/>'],
+  ["يوم المهنة","أعرف الطلاب بمهنتي",'<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5h6v2M3 13h18"/>'],
+  ["دعم الفعاليات","تنظيم واستقبال وتجهيز",'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>'],
+  ["استشارة متخصصة","رأي خبير عند الحاجة",'<path d="M4 5h16v11H9l-5 4z"/>'],
+  ["اللقاءات الأسرية","حضور وتفاعل وتبادل خبرات",'<circle cx="8" cy="9" r="3"/><circle cx="16" cy="9" r="3"/><path d="M2 20c0-3 3-5 6-5s6 2 6 5M10 20c0-3 3-5 6-5s6 2 6 5"/>']
+];
+const TIMES = [
+  ["صباحا أثناء الدوام","من ٧ صباحا إلى ٢ ظهرا",'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>'],
+  ["بعد الدوام","فعاليات مسائية",'<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>'],
+  ["عن بعد","لقاء أو محاضرة افتراضية",'<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/>']
+];
+const tileHTML = (type, name, value, title, desc, icon) =>
+  `<label class="tile"><input type="${type}" name="${name}" value="${esc(value)}"><span class="tile-in"><svg viewBox="0 0 24 24" aria-hidden="true">${icon}</svg><b>${esc(title)}</b><small>${esc(desc)}</small></span></label>`;
+function buildTiles(){
+  $("#t_field").innerHTML = DOMAINS.map((d,i)=>tileHTML("radio","field",d.name,d.name,d.hint,DOMAIN_ICONS[i])).join("");
+  $("#t_types").innerHTML = TYPES.map(t=>tileHTML("checkbox","types",t[0],t[0],t[1],t[2])).join("");
+  $("#t_times").innerHTML = TIMES.map(t=>tileHTML("checkbox","times",t[0],t[0],t[1],t[2])).join("");
+  $$('#t_field input').forEach(i=>i.addEventListener("change",()=>setTimeout(()=>goStep(2),300)));
+}
+let step = 1; const TOTAL = 4;
+function goStep(n){
+  step = n;
+  $$(".step").forEach(x=>x.hidden = Number(x.dataset.step)!==n);
+  $("#pfill").style.width = (n/TOTAL*100)+"%";
+  $("#pstep").textContent = `الخطوة ${arNum(n)} من ${arNum(TOTAL)}`;
+  $("#prevBtn").hidden = n===1; $("#nextBtn").hidden = n===TOTAL; $("#submitBtn").hidden = n!==TOTAL;
+  setMsg($("#skillForm"),"");
+  $("#stepper").scrollIntoView({block:"nearest"});
+}
+const picked = name => $$(`#skillForm input[name="${name}"]:checked`).map(i=>i.value);
+function stepError(n){
+  if(n===1 && !picked("field").length) return "اختر مجالا للمتابعة.";
+  if(n===2 && !picked("types").length) return "اختر طريقة مشاركة واحدة على الأقل.";
+  if(n===3 && !picked("times").length) return "اختر وقتا مناسبا واحدا على الأقل.";
+  return "";
+}
+$("#nextBtn").addEventListener("click",()=>{ const er = stepError(step); if(er) return setMsg($("#skillForm"),er,"err"); goStep(step+1); });
+$("#prevBtn").addEventListener("click",()=>goStep(Math.max(1,step-1)));
+$("#skillForm").addEventListener("submit", async e=>{
+  e.preventDefault(); const f = e.target;
+  if(step!==TOTAL) return;
+  const data = {
+    type:"skill", name:$("#s_name").value.trim(), relation:$("#s_rel").value, phone:toLatin($("#s_phone").value),
+    grade:$("#s_grade").value, field:picked("field")[0]||"", job:$("#s_job").value.trim(),
+    types:picked("types").join("، "), times:picked("times").join("، "), notes:$("#s_notes").value.trim(), website:$("#s_website").value
+  };
+  for(const n of [1,2,3]){ const er = stepError(n); if(er){ goStep(n); return setMsg(f,er,"err"); } }
+  if(!data.name||!data.relation||!data.job) return setMsg(f,"يرجى إكمال الحقول المطلوبة المعلمة بـ *.","err");
+  if(!validPhone(data.phone)) return setMsg(f,"يرجى كتابة رقم الجوال بصيغة 05XXXXXXXX.","err");
+  if(!$("#s_consent").checked) return setMsg(f,"يلزم الموافقة على التواصل قبل الإرسال.","err");
+  const btn = $("#submitBtn"); btn.disabled = true; setMsg(f,"جار الإرسال…");
+  try{
+    const r = await apiPost(data);
+    if(r.ok){ showSkillDone(data); f.reset(); setMsg(f,""); goStep(1); }
+    else setMsg(f, r.error||"تعذر الإرسال، يرجى المحاولة مرة أخرى.","err");
+  }catch(err){ setMsg(f,"تعذر الاتصال بالخادم. تحقق من الاتصال بالإنترنت وحاول مرة أخرى.","err"); }
+  btn.disabled = false;
+});
+
+/* ---------- فرص التطوع ---------- */
+let opps = [];
+const months = ["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"];
+async function loadOpps(){
+  const box = $("#oppList");
+  try{
+    const r = await apiGet({action:"opps"});
+    opps = (r.opps||[]).filter(o=>o.open||o.done).sort((a,b)=>(b.done?1:0)-(a.done?1:0));
+    if(!opps.length){ box.innerHTML = '<div class="empty">لا توجد فعاليات معلنة حاليا. تابعونا قريبا.</div>'; return; }
+    box.innerHTML = opps.map(o=>{
+      const d = new Date(o.date); const valid = !isNaN(d);
+      const left = o.done ? 0 : Math.max(0,(o.seats||0)-(o.taken||0));
+      return `<article class="opp">
+        <div class="date">${valid?`<b>${arNum(d.getDate())}</b><small>${months[d.getMonth()]}</small>`:`<small>${esc(o.date)}</small>`}</div>
+        <div><h3>${esc(o.title)}</h3><p>${esc(o.desc)}</p>
+          <div class="meta"><span>${esc(o.time)}</span>${o.nvgUrl?'<span class="nvg-badge">✓ فرصة تطوعية رسمية في المنصة الوطنية</span>':''}
+          ${o.done?`<span class="nvg-badge">✓ نفذت بحضور ${arNum(o.attended||o.taken||0)} من أولياء الأمور</span>`:left?`<span class="seats">متبق ${arNum(left)} من ${arNum(o.seats)} مقاعد</span>`:`<span class="full-seat">اكتملت المقاعد</span>`}</div></div>
+        ${o.done ? "" : `<div class="opp-act">${o.nvgUrl && left ? `<a class="btn btn-primary" href="${esc(o.nvgUrl)}" target="_blank" rel="noopener">سجل عبر المنصة الوطنية</a>` : ''}
+          <button class="btn ${left && !o.nvgUrl ? 'btn-primary' : 'btn-ghost'}" type="button" data-opp="${esc(o.id)}" ${left?'':'disabled'}>${left?(o.nvgUrl?'إبلاغ المدرسة بمشاركتي':'سجل حضورك'):'مكتملة'}</button></div>`}
+      </article>`;
+    }).join("");
+  }catch(e){ box.innerHTML = '<div class="empty">تعذر تحميل الفعاليات. يرجى تحديث الصفحة أو المحاولة لاحقا.</div>'; }
+}
+let currentOpp = null;
+$("#oppList").addEventListener("click", e=>{
+  const b = e.target.closest("[data-opp]"); if(b) openOppDialog(b.dataset.opp);
+});
+async function goOpp(id){ go("volunteer"); await oppsP; openOppDialog(id); }
+function openOppDialog(id){
+  currentOpp = opps.find(o=>String(o.id)===String(id)); if(!currentOpp) return;
+  $("#dOpp").textContent = currentOpp.title + " | " + currentOpp.time;
+  $("#volForm").reset(); setMsg($("#volForm"),""); $("#volForm").hidden=false; $("#volDone").hidden=true;
+  $("#volDialog").showModal(); $("#v_name").focus();
+}
+$("#dClose").addEventListener("click",()=>$("#volDialog").close());
+$("#volForm").addEventListener("submit", async e=>{
+  e.preventDefault(); const f = e.target;
+  const data = {type:"volunteer", oppId:currentOpp.id, name:$("#v_name").value.trim(), relation:$("#v_rel").value, phone:toLatin($("#v_phone").value), website:$("#v_website").value};
+  if(!data.name||!data.relation) return setMsg(f,"يرجى إكمال الحقول المطلوبة.","err");
+  if(!validPhone(data.phone)) return setMsg(f,"يرجى كتابة رقم الجوال بصيغة 05XXXXXXXX.","err");
+  if(!$("#v_consent").checked) return setMsg(f,"يلزم الموافقة قبل التسجيل.","err");
+  const btn = f.querySelector("button[type=submit]"); btn.disabled = true; setMsg(f,"جار التسجيل…");
+  try{
+    const r = await apiPost(data);
+    if(r.ok){ showVolDone(data.name, currentOpp); loadOpps(); }
+    else setMsg(f, r.error||"تعذر التسجيل.","err");
+  }catch(err){ setMsg(f,"تعذر الاتصال بالخادم، يرجى المحاولة مرة أخرى.","err"); }
+  btn.disabled = false;
+});
+
+/* ---------- لوحة الأثر ---------- */
+let adminCode = "", stats = null, activeSub = "skillsT";
+$("#gateHint").textContent = DEMO ? "وضع التجربة: رمز الدخول 1234. البيانات محفوظة على هذا الجهاز فقط." : "يتحقق من الرمز عبر خادم المدرسة.";
+$("#gateForm").addEventListener("submit", async e=>{
+  e.preventDefault(); const f = e.target; const code = $("#g_code").value.trim();
+  setMsg(f,"جار التحقق…");
+  try{
+    const r = await apiGet({action:"stats", code});
+    if(!r.ok) return setMsg(f, r.error||"الرمز غير صحيح.","err");
+    adminCode = code; stats = r; setMsg(f,""); f.hidden = true; $("#dash").hidden = false; renderDash();
+  }catch(err){ setMsg(f,"تعذر الاتصال بالخادم.","err"); }
+});
+$("#logoutBtn").addEventListener("click",()=>{ adminCode=""; stats=null; $("#dash").hidden=true; $("#gateForm").hidden=false; $("#g_code").value=""; });
+
+function bars(el, entries){
+  const max = Math.max(1,...entries.map(e=>e[1]));
+  el.innerHTML = entries.length ? entries.map(([k,v])=>`<div class="bar"><span>${esc(k)}</span><div class="track"><div class="fill" style="width:${(v/max*100).toFixed(1)}%"></div></div><span class="v">${arNum(v)}</span></div>`).join("")
+    : '<p class="hint" style="margin:0">لا توجد بيانات بعد.</p>';
+}
+function table(rows, cols){
+  if(!rows.length) return '<p class="hint" style="padding:16px;margin:0">لا توجد تسجيلات بعد.</p>';
+  return `<table><thead><tr>${cols.map(c=>`<th>${c[0]}</th>`).join("")}</tr></thead><tbody>${
+    rows.slice().reverse().map(r=>`<tr>${cols.map(c=>`<td>${esc(c[2]?c[2](r[c[1]]):r[c[1]])}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
+}
+const fmtDate = s => { const d=new Date(s); return isNaN(d)?(s||""):d.toLocaleDateString("ar-SA-u-ca-gregory",{day:"numeric",month:"short",year:"numeric"}); };
+const SKILL_COLS = [["التاريخ","date",fmtDate],["الاسم","name"],["الصلة","relation"],["الجوال","phone"],["الصف","grade"],["المجال","field"],["المهنة","job"],["المشاركة","types"],["الأوقات","times"],["ملاحظات","notes"]];
+const VOL_COLS = [["التاريخ","date",fmtDate],["الاسم","name"],["الصلة","relation"],["الجوال","phone"],["الفعالية","oppTitle"]];
+
+function renderDash(){
+  const {skills=[], volunteers=[], opps:os=[], posts=[]} = stats;
+  $("#postT").innerHTML = postTable(posts);
+  const pend = posts.filter(x=>x.status==="بانتظار المراجعة").length;
+  $("#pendBadge").textContent = pend ? `(${arNum(pend)} بانتظار المراجعة)` : "";
+  const oppMap = Object.fromEntries(os.map(o=>[String(o.id),o]));
+  volunteers.forEach(v=>{ const o=oppMap[String(v.oppId)]; if(o){ v.oppTitle = v.oppTitle||o.title; v.hours = v.hours||o.hours; } });
+  $("#k1").textContent = arNum(skills.length);
+  $("#k2").textContent = arNum(volunteers.length);
+  $("#k3").textContent = arNum(posts.length);
+  $("#k4").textContent = arNum((stats.gifts||[]).filter(x=>x.status==="بانتظار الموافقة").length);
+  $("#giftT").innerHTML = giftTable(stats.gifts||[]);
+  const byField = {}; skills.forEach(s=>byField[s.field]=(byField[s.field]||0)+1);
+  bars($("#barsField"), Object.entries(byField).sort((a,b)=>b[1]-a[1]));
+  bars($("#barsOpp"), os.map(o=>[o.title, volunteers.filter(v=>String(v.oppId)===String(o.id)).length]));
+  $("#skillsT").innerHTML = table(skills, SKILL_COLS);
+  $("#volT").innerHTML = table(volunteers, VOL_COLS);
+}
+$$(".subtabs button").forEach(b=>b.addEventListener("click",()=>{
+  activeSub = b.dataset.sub;
+  $$(".subtabs button").forEach(x=>x.setAttribute("aria-selected", x===b));
+  ["skillsT","volT","postT","giftT"].forEach(id=>$("#"+id).hidden = activeSub!==id);
+}));
+$("#exportBtn").addEventListener("click",async ()=>{
+  if(!stats) return;
+  const MAP = {skillsT:[stats.skills,SKILL_COLS,"بنك_المهارات"], volT:[stats.volunteers,VOL_COLS,"المسجلون_في_الفعاليات"], giftT:[stats.gifts||[],GIFT_COLS,"سجل_الهبات_العينية"], postT:[stats.posts||[],POST_COLS,"مشاركات_البرامج"]};
+  const [rows, cols, fname] = MAP[activeSub];
+  const safe = v => { let t=String(v==null?"":v); if(/^[=+\-@]/.test(t)) t="'"+t; return '"'+t.replace(/"/g,'""')+'"'; };
+  const csv = [cols.map(c=>safe(c[0])).join(","), ...rows.map(r=>cols.map(c=>safe(c[2]?c[2](r[c[1]]):r[c[1]])).join(","))].join("\r\n");
+  const filename = fname+".csv";
+  const blob = new Blob(["\uFEFF"+csv],{type:"text/csv;charset=utf-8"});
+  try{
+    const dl = window.claude && window.claude.use ? await window.claude.use("downloads") : null;
+    if(dl){ try{ await dl.save({filename, data:blob}); }catch(_){} return; }
+  }catch(_){}
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = filename; a.click();
+});
+
+/* ---------- تهيئة ---------- */
+document.title = CONFIG.platformName + " | " + CONFIG.subtitle;
+$("#brandName").textContent = CONFIG.platformName; $("#heroName").textContent = CONFIG.platformName;
+$("#brandSub").textContent = CONFIG.subtitle; $("#heroSub").textContent = CONFIG.slogan || CONFIG.subtitle;
+$("#schoolTop").textContent = CONFIG.school;
+$("#footSchool").textContent = CONFIG.school;
+/* ---------- أيقونات المجالات ---------- */
+const DOMAIN_ICONS = [
+  '<circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M15 14.5c3 0 6 1.8 6 5"/>',
+  '<path d="M3 5c3-1 6-1 9 1 3-2 6-2 9-1v14c-3-1-6-1-9 1-3-2-6-2-9-1z"/><path d="M12 6v14"/>',
+  '<path d="M12 3a9 9 0 1 0 0 18c1.5 0 2-1 2-2 0-1.5-1.5-2 0-3.5h2.5A4.5 4.5 0 0 0 21 11c0-4.4-4-8-9-8z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10" cy="7" r="1"/><circle cx="15" cy="7.5" r="1"/>',
+  '<path d="M5 19c0-8 5-14 15-14 0 10-6 15-14 15"/><path d="M5 19c3-4 6-6 10-8"/>',
+  '<path d="M12 20s-8-4.5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 9c0 6.5-8 11-8 11z"/><path d="M7 12h3l1.5-2.5 2 5 1.5-2.5h2"/>',
+  '<path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/>',
+  '<rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/>'
+];
+$$(".domain:not(.day) h3").forEach((h,i)=>h.insertAdjacentHTML("afterbegin", `<svg class="di" viewBox="0 0 24 24" aria-hidden="true">${DOMAIN_ICONS[i]||""}</svg>`));
+
+/* ---------- العدادات الحية ---------- */
+function countUp(el, n){
+  n = Number(n||0);
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches || !n){ el.textContent = arNum(n); return; }
+  let start = null; const dur = 1000;
+  const step = t => { if(!start) start = t; const p = Math.min(1,(t-start)/dur); el.textContent = arNum(Math.round(n*(1-Math.pow(1-p,3)))); if(p<1) requestAnimationFrame(step); };
+  requestAnimationFrame(step);
+}
+async function loadSummary(){
+  try{ const r = await apiGet({action:"summary"}); if(!r.ok) return;
+    countUp($("#c1"), r.skills); countUp($("#c2"), r.participations); countUp($("#c3"), r.opps);
+    renderTree(r.fields||{}); renderGoal(r.participations||0);
+  }catch(e){}
+}
+
+
+function renderTree(fields){
+  const N = 72, cx = 200, cy = 112, RX = 150, RY = 92;
+  const leaves = []; DOMAINS.forEach((d,i)=>{ for(let k=0;k<(fields[d.name]||0);k++) leaves.push(i); });
+  for(let i=leaves.length-1;i>0;i--){ const j = (i*7919)%(i+1); [leaves[i],leaves[j]] = [leaves[j],leaves[i]]; }
+  let slots = "", lv = "";
+  const trunk = `<path class="trunk" stroke-width="12" d="M200 300 C197 260 203 230 200 190"/>
+    <path class="trunk" stroke-width="6" d="M200 222 C178 205 158 190 138 168 M200 208 C224 192 246 178 266 156 M200 196 C192 176 186 160 182 140 M200 192 C212 172 220 156 224 136"/>`;
+  const order = [...Array(N).keys()].sort((p,q)=>((p*37+11)%N)-((q*37+11)%N));
+  const rank = []; order.forEach((slot,k)=>rank[slot]=k);
+  for(let i=0;i<N;i++){
+    const a = i*2.39996, r = Math.sqrt((i+.5)/N);
+    const x = (cx + r*RX*Math.cos(a)).toFixed(1), y = (cy + r*RY*Math.sin(a)).toFixed(1), rot = Math.round((a*57.3)%180);
+    const k = rank[i];
+    if(k<leaves.length) lv += `<g transform="translate(${x} ${y}) rotate(${rot})"><ellipse class="leaf" rx="9.5" ry="5.2" fill="${DCOLORS[leaves[k]]}" style="animation-delay:${k*35}ms"/></g>`;
+    else slots += `<g transform="translate(${x} ${y}) rotate(${rot})"><ellipse class="slot" rx="8" ry="4.4"/></g>`;
+  }
+  $("#tree").innerHTML = `<ellipse class="crown" cx="${cx}" cy="${cy}" rx="${RX+14}" ry="${RY+12}"/>` + slots + trunk + lv;
+  $("#legend").innerHTML = DOMAINS.map((d,i)=>`<span><i style="background:${DCOLORS[i]}"></i>${esc(d.name)} (${arNum(fields[d.name]||0)})</span>`).join("");
+}
+function renderGoal(hours){
+  const goal = CONFIG.goalParticipations||200, pct = Math.min(1, hours/goal), C = 477.5;
+  requestAnimationFrame(()=>setTimeout(()=>$("#ringFg").setAttribute("stroke-dashoffset",(C*(1-pct)).toFixed(1)),60));
+  countUp({set textContent(v){ $("#ringPct").textContent = v+"٪"; }}, Math.round(pct*100));
+  $("#ringTxt").textContent = `${arNum(hours)} من ${arNum(goal)} مشاركة`;
+  $("#goalTxt").textContent = `نصل معا إلى ${arNum(goal)} مشاركة أسرية هذا العام: خبرات، ومشاركات في البرامج، وحضور للفعاليات.`;
+}
+
+/* ---------- البرامج ومشاركات الأسر ---------- */
+function whoLabel(x){ return [x.relation ? (x.relation==="أم"||x.relation==="أب" ? `${x.relation} طالب/ـة` : x.relation) : "ولي أمر", x.grade ? `الصف ${x.grade}` : ""].filter(Boolean).join(" | "); }
+let programs = [], postProg = null, postPhotos = [];
+async function loadPrograms(){
+  const box = $("#progList");
+  try{
+    const r = await apiGet({action:"programs"});
+    programs = r.programs || [];
+    if(!programs.length){ box.innerHTML = '<div class="empty">لا توجد برامج معلنة حاليا.</div>'; return; }
+    box.innerHTML = programs.map(pr=>`<article class="prog">
+      <div class="prog-head"><div>${pr.owner?`<small class="prog-owner">إشراف: ${esc(pr.owner)}</small>`:""}<h2>${esc(pr.title)}</h2><p>${esc(pr.desc)}</p></div>
+        <div class="prog-count"><b>${arNum(pr.count||0)}</b><span>مشاركة</span></div></div>
+      ${(pr.photos||[]).length ? `<div class="pgal">${pr.photos.slice(0,8).map((u,i)=>`<button class="pg" type="button" data-gal="${esc(pr.id)}" data-i="${i}" aria-label="عرض الصورة ${arNum(i+1)}"><img src="${esc(u.thumb)}" loading="lazy" alt=""></button>`).join("")}${pr.photos.length>8?`<button class="pg more" type="button" data-gal="${esc(pr.id)}" data-i="8"><span dir="ltr">+${arNum(pr.photos.length-8)}</span></button>`:(pr.photos.length===8?"":"")}</div><p class="gal-cap">معرض البرنامج: ${arNum(pr.photos.length)} صورة</p>${DEMO ? `<p class="hint" style="margin:4px 0 0">هذه مربعات معاينة فقط. تظهر صور مجلد Google Drive الحقيقية هنا بعد ربط المنصة بـ Google Sheet.</p>` : ""}` : ""}
+      ${(pr.approved||[]).length ? `<div class="gallery">${pr.approved.map(x=>`<figure class="post">${x.photos&&x.photos[0]?`<img src="${esc(x.photos[0])}" loading="lazy" alt="صورة من مشاركة أسرة">`:""}<figcaption><p>${esc(String(x.text).slice(0,160))}</p><small>${esc(x.who)} | ${esc(fmtDate(x.date))}</small></figcaption></figure>`).join("")}</div>`
+        : `<p class="hint" style="margin-top:14px">كونوا أول من يشارك في هذا البرنامج.</p>`}
+      <button class="btn btn-primary" type="button" data-post="${esc(pr.id)}">أضف مشاركتك</button>
+    </article>`).join("");
+  }catch(e){ box.innerHTML = '<div class="empty">تعذر تحميل البرامج. يرجى المحاولة لاحقا.</div>'; }
+}
+$("#progList").addEventListener("click", e=>{ const b = e.target.closest("[data-post]"); if(b) openPost(b.dataset.post); });
+function openPost(id){
+  postProg = programs.find(x=>String(x.id)===String(id)); if(!postProg) return;
+  $("#pdProg").textContent = postProg.title;
+  $("#postForm").reset(); setMsg($("#postForm"),""); postPhotos = []; renderThumbs();
+  $("#postForm").hidden = false; $("#postDone").hidden = true;
+  $("#postDialog").showModal(); $("#p_text").focus();
+}
+$("#pClose").addEventListener("click",()=>$("#postDialog").close());
+function resizeImage(file, max){
+  return new Promise((res,rej)=>{
+    const img = new Image(), url = URL.createObjectURL(file);
+    img.onload = ()=>{ const k = Math.min(1, max/Math.max(img.width,img.height)); const c = document.createElement("canvas");
+      c.width = Math.round(img.width*k); c.height = Math.round(img.height*k); c.getContext("2d").drawImage(img,0,0,c.width,c.height);
+      URL.revokeObjectURL(url); res(c.toDataURL("image/jpeg",0.82)); };
+    img.onerror = ()=>{ URL.revokeObjectURL(url); rej(new Error("bad image")); };
+    img.src = url;
+  });
+}
+function renderThumbs(){
+  $("#p_thumbs").innerHTML = postPhotos.map((src,i)=>`<div><img src="${src}" alt="صورة مرفقة ${arNum(i+1)}"><button type="button" data-rm="${i}" aria-label="حذف الصورة">×</button></div>`).join("");
+}
+$("#p_thumbs").addEventListener("click", e=>{ const b = e.target.closest("[data-rm]"); if(b){ postPhotos.splice(Number(b.dataset.rm),1); renderThumbs(); } });
+$("#p_files").addEventListener("change", async e=>{
+  const files = [...e.target.files]; e.target.value = "";
+  for(const f of files){
+    if(postPhotos.length>=3){ setMsg($("#postForm"),"الحد الأقصى ٣ صور.","err"); break; }
+    if(!f.type.startsWith("image/")) continue;
+    try{ postPhotos.push(await resizeImage(f, DEMO ? 640 : 1280)); }catch(err){ setMsg($("#postForm"),"تعذر قراءة إحدى الصور، جرب صورة أخرى.","err"); }
+  }
+  renderThumbs();
+});
+$("#postForm").addEventListener("submit", async e=>{
+  e.preventDefault(); const f = e.target;
+  const data = {type:"post", programId:postProg.id, text:$("#p_text").value.trim(), name:$("#p_name").value.trim(), relation:$("#p_rel").value,
+    grade:$("#p_grade").value, phone:toLatin($("#p_phone").value), show:$("#p_show").checked?"نعم":"لا", photos:postPhotos.slice(), website:$("#p_website").value};
+  if(!data.text) return setMsg(f,"يرجى كتابة وصف قصير لمشاركتكم.","err");
+  if(!data.name||!data.relation) return setMsg(f,"يرجى إكمال الحقول المطلوبة.","err");
+  if(!validPhone(data.phone)) return setMsg(f,"يرجى كتابة رقم الجوال بصيغة 05XXXXXXXX.","err");
+  if(!$("#p_own").checked) return setMsg(f,"يلزم التأكيد قبل الإرسال.","err");
+  const btn = f.querySelector("button[type=submit]"); btn.disabled = true; setMsg(f, postPhotos.length ? "جار رفع الصور…" : "جار الإرسال…");
+  try{
+    const r = await apiPost(data);
+    if(r.ok){
+      $("#postDone").innerHTML = `<div class="done" style="padding:6px 0 0"><div class="check">${CHECK}</div><h2>وصلت مشاركتكم</h2>
+        <p>شكرا لكم يا ${esc(data.name)} على مشاركتكم في «${esc(postProg.title)}». ${data.show==="نعم" ? "ستظهر في المنصة بعد مراجعة المدرسة." : "وصلت للمدرسة ولن تعرض للعامة."}</p></div>
+        <div class="cta" style="margin-top:18px"><button class="btn btn-primary" type="button" id="postOk">تم</button></div>`;
+      f.hidden = true; $("#postDone").hidden = false;
+      $("#postOk").addEventListener("click",()=>{ $("#postDialog").close(); loadPrograms(); });
+    } else setMsg(f, r.error||"تعذر الإرسال.","err");
+  }catch(err){ setMsg(f,"تعذر الاتصال بالخادم، يرجى المحاولة مرة أخرى.","err"); }
+  btn.disabled = false;
+});
+const POST_COLS = [["التاريخ","date",fmtDate],["البرنامج","programTitle"],["الاسم","name"],["الصلة","relation"],["الجوال","phone"],["الصف","grade"],["المشاركة","text"],["موافقة العرض","show"],["الحالة","status"]];
+function postTable(rows){
+  if(!rows.length) return '<p class="hint" style="padding:16px;margin:0">لا توجد مشاركات بعد.</p>';
+  const stc = s => s==="معتمدة" ? "st-ok" : s==="مرفوضة" ? "st-no" : "st-wait";
+  return `<table><thead><tr><th>التاريخ</th><th>البرنامج</th><th>الاسم</th><th>الجوال</th><th>المشاركة</th><th>الصور</th><th>العرض</th><th>الحالة</th><th>إجراء</th></tr></thead><tbody>${
+    rows.slice().reverse().map(x=>`<tr><td>${esc(fmtDate(x.date))}</td><td>${esc(x.programTitle||"")}</td><td>${esc(x.name)} <small>(${esc(x.relation||"")})</small></td><td>${esc(x.phone)}</td>
+      <td style="white-space:normal;min-width:220px">${esc(x.text)}</td>
+      <td>${(x.photoLinks||[]).map((u,i)=>String(u).startsWith("data:") ? `<img class="tb" src="${u}" alt="">` : `<a href="${esc(u)}" target="_blank" rel="noopener">صورة ${arNum(i+1)}</a>`).join(" ")||"—"}</td>
+      <td>${esc(x.show)}</td><td><span class="st ${stc(x.status)}">${esc(x.status)}</span></td>
+      <td>${x.status==="بانتظار المراجعة" ? `<button class="mini ok" type="button" data-review="${esc(x.id)}" data-d="معتمدة">اعتماد</button><button class="mini no" type="button" data-review="${esc(x.id)}" data-d="مرفوضة">رفض</button>` : "—"}</td></tr>`).join("")}</tbody></table>`;
+}
+$("#postT").addEventListener("click", async e=>{
+  const b = e.target.closest("[data-review]"); if(!b) return;
+  b.disabled = true;
+  try{
+    const r = await apiPost({type:"review", code:adminCode, id:b.dataset.review, decision:b.dataset.d});
+    if(!r.ok){ alert(r.error||"تعذر التحديث."); b.disabled = false; return; }
+    const s2 = await apiGet({action:"stats", code:adminCode}); if(s2.ok){ stats = s2; renderDash(); }
+  }catch(err){ b.disabled = false; }
+});
+
+/* ---------- معرض صور البرامج ---------- */
+let lbList = [], lbI = 0;
+function lbShow(){ const x = lbList[lbI]; if(!x) return; $("#lbImg").src = x.full || x.thumb; $("#lbC").textContent = `${arNum(lbI+1)} / ${arNum(lbList.length)}`; }
+function lbOpen(list, i){ lbList = list; lbI = i; lbShow(); $("#lb").hidden = false; document.body.style.overflow = "hidden"; }
+function lbClose(){ $("#lb").hidden = true; $("#lbImg").src = ""; document.body.style.overflow = ""; }
+const lbStep = d => { lbI = (lbI + d + lbList.length) % lbList.length; lbShow(); };
+$("#lbX").addEventListener("click", lbClose);
+$("#lbNext").addEventListener("click", ()=>lbStep(1));
+$("#lbPrev").addEventListener("click", ()=>lbStep(-1));
+$("#lb").addEventListener("click", e=>{ if(e.target.id==="lb") lbClose(); });
+document.addEventListener("keydown", e=>{ if($("#lb").hidden) return; if(e.key==="Escape") lbClose(); if(e.key==="ArrowLeft") lbStep(1); if(e.key==="ArrowRight") lbStep(-1); });
+let tx = null;
+$("#lb").addEventListener("touchstart", e=>{ tx = e.touches[0].clientX; }, {passive:true});
+$("#lb").addEventListener("touchend", e=>{ if(tx===null) return; const dx = e.changedTouches[0].clientX - tx; if(Math.abs(dx)>40) lbStep(dx>0 ? 1 : -1); tx = null; });
+$("#progList").addEventListener("click", e=>{ const b = e.target.closest("[data-gal]"); if(!b) return;
+  const pr = programs.find(x=>String(x.id)===b.dataset.gal); if(pr) lbOpen(pr.photos||[], Number(b.dataset.i)||0); });
+
+/* ---------- الهبات ---------- */
+$("#giftDomains").innerHTML = DOMAINS.map((d,i)=>`<span class="dchip"><svg viewBox="0 0 24 24" aria-hidden="true">${DOMAIN_ICONS[i]}</svg>${esc(d.name)}</span>`).join("");
+$("#giftForm").addEventListener("submit", async e=>{
+  e.preventDefault(); const f = e.target;
+  const gt = ($('#g_type input:checked')||{}).value || "";
+  const data = {type:"gift", name:$("#g_name").value.trim(), kind:$("#g_kind").value, rep:$("#g_rep").value.trim(), phone:toLatin($("#g_phone").value),
+    gtype:gt, item:$("#g_item").value.trim(), qty:$("#g_qty").value.trim(), use:$("#g_use").value.trim(), website:$("#g_website").value};
+  if(!data.name||!data.kind||!data.item||!data.gtype) return setMsg(f,"يرجى إكمال الحقول المطلوبة المعلمة بـ *.","err");
+  if(!validPhone(data.phone)) return setMsg(f,"يرجى كتابة رقم الجوال بصيغة 05XXXXXXXX.","err");
+  if(!["g_c1","g_c2"].every(id=>$("#"+id).checked)) return setMsg(f,"يلزم الموافقة على الإقرار.","err");
+  const btn = f.querySelector("button[type=submit]"); btn.disabled = true; setMsg(f,"جار الإرسال…");
+  try{
+    const r = await apiPost(data);
+    if(r.ok){
+      $("#giftDone").innerHTML = `<div class="check">${CHECK}</div><h2>شكرا لعطائكم</h2><p>وصلت رغبتكم في مبادرة «${esc(data.item)}»، وسنتواصل معكم قريبا بإذن الله.</p>`;
+      f.hidden = true; $("#giftDone").hidden = false; window.scrollTo(0,0);
+    } else setMsg(f, r.error||"تعذر الإرسال.","err");
+  }catch(err){ setMsg(f,"تعذر الاتصال بالخادم، يرجى المحاولة مرة أخرى.","err"); }
+  btn.disabled = false;
+});
+const GIFT_COLS = [["تاريخ الطلب","date",fmtDate],["الجهة أو الفرد المانح","name"],["نوع الجهة","kind"],["ممثل الجهة","rep"],["الجوال","phone"],["نوع الهبة","gtype"],["الغرض","use"],["وصف الهبة","item"],["الكمية","qty"],["الحالة","status"],["رقم الموافقة","approval"]];
+function giftTable(rows){
+  if(!rows.length) return '<p class="hint" style="padding:16px;margin:0">لا توجد مبادرات بعد.</p>';
+  const stc = s => s==="مقبولة" ? "st-ok" : s==="معتذر عنها" ? "st-no" : "st-wait";
+  return `<table><thead><tr><th>التاريخ</th><th>المانح</th><th>نوع الجهة</th><th>الجوال</th><th>نوع الهبة</th><th>الوصف</th><th>الكمية</th><th>الحالة</th><th>إجراء</th></tr></thead><tbody>${
+    rows.slice().reverse().map(x=>`<tr><td>${esc(fmtDate(x.date))}</td><td>${esc(x.name)}${x.rep?`<br><span class="st-sub">${esc(x.rep)}</span>`:""}</td><td>${esc(x.kind)}</td><td>${esc(x.phone)}</td><td>${esc(x.gtype||"—")}</td>
+      <td style="white-space:normal;min-width:200px">${esc(x.item)}${x.use?`<br><span class="st-sub">الغرض: ${esc(x.use)}</span>`:""}</td><td>${esc(x.qty||"—")}</td>
+      <td><span class="st ${stc(x.status)}">${esc(x.status)}</span>${x.approval?`<br><span class="st-sub">موافقة: ${esc(x.approval)}</span>`:""}</td>
+      <td>${x.status==="بانتظار الموافقة" ? `<button class="mini ok" type="button" data-gift="${esc(x.id)}" data-d="مقبولة">تمت الموافقة</button><button class="mini no" type="button" data-gift="${esc(x.id)}" data-d="معتذر عنها">اعتذار</button>` : ""}<button class="mini" type="button" data-gprint="${esc(x.id)}">طباعة الاستمارة</button></td></tr>`).join("")}</tbody></table>
+    <p class="hint" style="padding:10px 14px;margin:0">«طباعة الاستمارة» تخرج استمارة الهبات المعتمدة معبأة بالبيانات للتوقيع عند التسليم. ويدون رقم الموافقة وتاريخ الاستلام في Google Sheet.</p>`;
+}
+const box = (on, t) => `<span style="white-space:nowrap;display:inline-block;margin-inline-end:14px">${on?"☑":"☐"} ${t}</span>`;
+function printGift(x){
+  const kinds = ["جهة حكومية","قطاع خاص","قطاع غير ربحي","فرد"], types = ["عينية","خدمية","تقنية"];
+  $("#giftPrint").innerHTML = `<div class="gp">
+    <div class="gp-head"><div>المملكة العربية السعودية<br>وزارة التعليم<br>إدارة تعليم جدة<br>${esc(CONFIG.school)}</div><div style="text-align:left">التاريخ: ${esc(fmtLong(new Date()))}</div></div>
+    <h2>استمارة الهبات</h2>
+    <h3>أولا: بيانات الجهة المانحة</h3>
+    <table><tr><td>اسم الجهة/الفرد المانح</td><td>${esc(x.name)}</td></tr>
+      <tr><td>نوع الجهة</td><td>${kinds.map(k=>box(x.kind===k,k)).join("")}${box(!kinds.includes(x.kind),"أخرى")}</td></tr>
+      <tr><td>اسم ممثل الجهة</td><td>${esc(x.rep||"")}</td></tr><tr><td>رقم الجوال</td><td>${esc(x.phone)}</td></tr></table>
+    <h3>ثانيا: بيانات الهبة</h3>
+    <table><tr><td>نوع الهبة</td><td>${types.map(k=>box(x.gtype===k,k)).join("")}${box(x.gtype && !types.includes(x.gtype),"أخرى")}</td></tr></table>
+    <h3>ثالثا: وصف الهبة</h3>
+    <table><tr><td>الغرض من الهبة</td><td>${esc(x.use||"")}</td></tr><tr><td>وصف الهبة</td><td>${esc(x.item)}</td></tr><tr><td>الكمية / العدد</td><td>${esc(x.qty||"")}</td></tr></table>
+    <h3>رابعا: إقرار المتبرع</h3>
+    <div class="decl">أقر أنا الموقع أدناه أن الهبة المقدمة صادرة برغبة شخصية دون أي التزام أو مقابل على إدارة التعليم، ولم تطلبها المدرسة.<br>
+      - الاسم: ${esc(x.rep||x.name)}<br>- التوقيع: ............................................<br>- التاريخ: &nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;١٤٤هـ</div>
+    <div class="note">ملاحظة: يرجى إرفاق المستندات أو الإيصالات أو الفواتير.</div></div>`;
+  document.body.classList.add("print-gift");
+  setTimeout(()=>{ window.print(); setTimeout(()=>document.body.classList.remove("print-gift"), 500); }, 50);
+}
+$("#giftT").addEventListener("click", async e=>{
+  const pb = e.target.closest("[data-gprint]");
+  if(pb){ const x = (stats.gifts||[]).find(g=>String(g.id)===pb.dataset.gprint); if(x) printGift(x); return; }
+  const b = e.target.closest("[data-gift]"); if(!b) return; b.disabled = true;
+  try{
+    const r = await apiPost({type:"giftReview", code:adminCode, id:b.dataset.gift, decision:b.dataset.d});
+    if(!r.ok){ alert(r.error||"تعذر التحديث."); b.disabled = false; return; }
+    const s2 = await apiGet({action:"stats", code:adminCode}); if(s2.ok){ stats = s2; renderDash(); }
+  }catch(err){ b.disabled = false; }
+});
+
+/* ---------- لحظة الشكر ---------- */
+const CHECK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+const fmtLong = s => { const d = new Date(s); return isNaN(d) ? (s||"") : d.toLocaleDateString("ar-SA-u-ca-gregory",{weekday:"long",day:"numeric",month:"long",year:"numeric"}); };
+async function showSkillDone(d){
+  const i = Math.max(0, DOMAINS.findIndex(x=>x.name===d.field)); const dm = DOMAINS[i];
+  $("#pIcon").innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true">${DOMAIN_ICONS[i]}</svg>`;
+  $("#pTitle").textContent = dm.persona;
+  $("#pDesc").textContent = `شكرا لك يا ${d.name}. ${dm.desc}`;
+  const chips = [...d.types.split("، "), ...d.times.split("، ")].filter(Boolean);
+  $("#dChips").innerHTML = chips.map(c=>`<span class="chip">${esc(c)}</span>`).join("");
+  $("#certName").textContent = d.name; $("#certField").textContent = dm.persona;
+  $("#certSchool").textContent = CONFIG.school; $("#certDate").textContent = fmtLong(new Date());
+  $("#stepper").hidden = true; $("#skillDone").hidden = false; window.scrollTo(0,0);
+  const box = $("#suggList"); box.innerHTML = '<p class="hint" style="margin:0">جار البحث عن فرص مناسبة…</p>';
+  try{
+    const r = await apiGet({action:"opps"});
+    const open = (r.opps||[]).filter(o=>o.open && (o.seats||0)>(o.taken||0));
+    const match = open.filter(o=>o.domain===d.field); const list = (match.length?match:open).slice(0,3);
+    box.innerHTML = list.length ? list.map(o=>`<div class="sugg"><div><b>${esc(o.title)}</b><small>${esc(fmtLong(o.date))} | ${esc(o.time)}</small></div><button class="btn btn-primary" type="button" data-go-opp="${esc(o.id)}">سجل في الفرصة</button></div>`).join("")
+      : '<p class="hint" style="margin:0">لا توجد فعاليات قادمة حاليا، وسنتواصل معك عند إعلان فعالية تناسبك.</p>';
+  }catch(e){ box.innerHTML = '<p class="hint" style="margin:0">تعذر تحميل الفرص الآن.</p>'; }
+}
+$("#suggList").addEventListener("click", e=>{ const b = e.target.closest("[data-go-opp]"); if(b) goOpp(b.dataset.goOpp); });
+$("#againBtn").addEventListener("click",()=>{ $("#skillDone").hidden = true; $("#stepper").hidden = false; goStep(1); window.scrollTo(0,0); });
+$("#printCert").addEventListener("click",()=>window.print());
+function showVolDone(name, o){
+  $("#volDone").innerHTML = `<div class="done" style="padding:6px 0 0"><div class="check">${CHECK}</div>
+    <h2>تم تسجيلكم</h2><p>شكرا لكم يا ${esc(name)}، نسعد بمشاركتكم وستتواصل معكم المدرسة لتأكيد التفاصيل.</p></div>
+    <div class="ticket">
+      <div><small>الفعالية</small><b>${esc(o.title)}</b></div>
+      <div><small>التاريخ</small><b>${esc(fmtLong(o.date))}</b></div>
+      <div><small>الوقت</small><b>${esc(o.time)}</b></div>
+      <div><small>المكان</small><b>${esc(o.place||"المدرسة")}</b></div>
+    </div>
+    ${o.nvgUrl ? `<p class="hint" style="margin-top:14px">هذه فرصة تطوعية رسمية، ولتوثيق ساعاتكم والحصول على الشهادة سجلوا فيها أيضا عبر المنصة الوطنية للعمل التطوعي.</p>` : ""}
+    <div class="cta" style="margin-top:14px">${o.nvgUrl ? `<a class="btn btn-primary" href="${esc(o.nvgUrl)}" target="_blank" rel="noopener">أكمل التسجيل في المنصة الوطنية</a>` : ""}<button class="btn ${o.nvgUrl ? "btn-ghost" : "btn-primary"}" type="button" id="volOk">تم</button></div>`;
+  $("#volForm").hidden = true; $("#volDone").hidden = false;
+  $("#volOk").addEventListener("click",()=>$("#volDialog").close());
+}
+
+if("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: reduce)").matches){
+  const io = new IntersectionObserver(es=>es.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add("in"); io.unobserve(en.target); } }),{threshold:.12});
+  $$('[data-page="home"] .block, [data-page="home"] .counters').forEach(el=>{ el.classList.add("reveal"); io.observe(el); });
+}
+buildTiles(); goStep(1);
+show(location.hash.slice(1));
+</script>
+</body>
+</html>
